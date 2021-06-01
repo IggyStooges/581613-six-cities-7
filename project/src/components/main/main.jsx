@@ -1,45 +1,8 @@
 import React from 'react';
 import PlaceCard from '../place-card/place-card';
 import PropTypes from 'prop-types';
-const cards = [
-  {
-    price: 120,
-    pictureUrl: 'img/apartment-01.jpg',
-    title: 'Beautiful & luxurious apartment at great location',
-    apartmentType: 'Apartment',
-    rating: 80,
-  },
-  {
-    price: 80,
-    pictureUrl: 'img/room.jpg',
-    title: 'Wood and stone place',
-    apartmentType: 'Private room',
-    rating: 80,
-  },
-  {
-    price: 132,
-    pictureUrl: 'img/apartment-02.jpg',
-    title: 'Canal View Prinsengracht',
-    apartmentType: 'Apartment',
-    rating: 80,
-  },
-  {
-    price: 180,
-    pictureUrl: 'img/apartment-03.jpg',
-    title: 'Nice, cozy, warm big bed apartment',
-    apartmentType: 'Apartment',
-    rating: 100,
-  },
-  {
-    price: 80,
-    pictureUrl: 'img/room.jpg',
-    title: 'Wood and stone place',
-    apartmentType: 'Private room',
-    rating: 80,
-  },
-];
 
-function Main({placesAmount}) {
+function Main({cards}) {
 
   return (
     <div className="page page--gray page--main">
@@ -113,7 +76,7 @@ function Main({placesAmount}) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesAmount} places to stay in Amsterdam</b>
+              <b className="places__found">{cards.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -153,7 +116,15 @@ function Main({placesAmount}) {
 }
 
 Main.propTypes = {
-  placesAmount: PropTypes.number.isRequired,
+  cards: PropTypes.arrayOf(
+    PropTypes.shape({
+      price: PropTypes.number.isRequired,
+      pictureUrl: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      apartmentType: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default Main;
