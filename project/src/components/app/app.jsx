@@ -1,7 +1,13 @@
 import React from 'react';
+import Main from '../main/main';
+import PropTypes from 'prop-types';
 
-function App() {
-  return <p>Hello, world!</p>;
+function App({placesAmount}) {
+  return <Main placesAmount={placesAmount} />;
 }
+
+App.propTypes = {
+  placesAmount: PropTypes.number.isRequired,
+};
 
 export default App;
