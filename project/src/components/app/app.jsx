@@ -1,5 +1,11 @@
 import React from 'react';
-import Main from '../main/main';
+import Main from '../pages/main/main';
+import SignIn from '../pages/sign-in/sign-in';
+import Favorites from '../pages/favorites/favorites';
+import Room from '../pages/room/room';
+import ErrorPage from '../pages/error-page/error-page';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 const cards = [
   {
@@ -40,7 +46,29 @@ const cards = [
 ];
 
 function App() {
-  return <Main cards={cards} />;
+  const { MAIN, SIGN_IN, FAVORITES, ROOM } = AppRoute;
+
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path={MAIN}>
+          <Main cards={cards} />
+        </Route>
+        <Route exact path={SIGN_IN}>
+          <SignIn />
+        </Route>
+        <Route exact path={FAVORITES}>
+          <Favorites />
+        </Route>
+        <Route exact path={ROOM}>
+          <Room />
+        </Route>
+        <Route>
+          <ErrorPage />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
 }
 
 export default App;
