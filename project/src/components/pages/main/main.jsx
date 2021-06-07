@@ -1,8 +1,9 @@
 import React from 'react';
 import PlaceCard from './place-card/place-card';
 import PropTypes from 'prop-types';
+import offerProp from '../../app/app.prop';
 
-function Main({cards}) {
+function Main({offers}) {
 
   return (
     <div className="page page--gray page--main">
@@ -76,7 +77,7 @@ function Main({cards}) {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{cards.length} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex="0">
@@ -93,13 +94,13 @@ function Main({cards}) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {cards.map(({price, pictureUrl, title, apartmentType, rating}) => (
+                {offers.map(({price, previewImage, title, type, rating, id}) => (
                   <PlaceCard
-                    key={title}
+                    key={id}
                     rating={rating}
-                    apartmentType={apartmentType}
+                    apartmentType={type}
                     title={title}
-                    pictureUrl={pictureUrl}
+                    previewImage={previewImage}
                     price={price}
                   />
                 ))}
@@ -116,15 +117,7 @@ function Main({cards}) {
 }
 
 Main.propTypes = {
-  cards: PropTypes.arrayOf(
-    PropTypes.shape({
-      price: PropTypes.number.isRequired,
-      pictureUrl: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      apartmentType: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-    }),
-  ).isRequired,
+  offers: PropTypes.arrayOf(offerProp).isRequired,
 };
 
 export default Main;

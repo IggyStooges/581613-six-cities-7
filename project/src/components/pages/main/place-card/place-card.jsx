@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function PlaceCard({price, pictureUrl, title, apartmentType, rating}) {
+function PlaceCard({price, previewImage, title, apartmentType, rating}) {
   return (
     <article className="cities__place-card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={pictureUrl} width="260" height="200" alt={title} />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
         </a>
       </div>
       <div className="place-card__info">
@@ -24,7 +24,7 @@ function PlaceCard({price, pictureUrl, title, apartmentType, rating}) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${rating}%`}}></span>
+            <span style={{width: `${(rating / 5) * 100}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -39,7 +39,7 @@ function PlaceCard({price, pictureUrl, title, apartmentType, rating}) {
 
 PlaceCard.propTypes = {
   price: PropTypes.number.isRequired,
-  pictureUrl: PropTypes.string.isRequired,
+  previewImage: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   apartmentType: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
