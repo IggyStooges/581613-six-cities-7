@@ -9,9 +9,44 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import PropTypes from 'prop-types';
 
-
 function App({ offers }) {
   const { MAIN, SIGN_IN, FAVORITES, ROOM } = AppRoute;
+  const favorites = offers.filter(({ isFavorite }) => isFavorite);
+
+  const sortFavorites = () => {
+    const sortedFavorites = [];
+
+    for (const { city, price, previewImage, type, rating, title, id } of favorites) {
+
+      const currentCities = sortedFavorites.map(element => element.city);
+
+      if (currentCities.indexOf(city.name) === -1) {
+        sortedFavorites.push({
+          city: city.name,
+          offers: [{
+            price,
+            previewImage,
+            apartmentType: type,
+            rating,
+            title,
+            id
+          }],
+          id
+        })
+      } else {
+        sortedFavorites.find(element => element.city === city.name).offers.push({
+          price,
+          previewImage,
+          apartmentType: type,
+          rating,
+          title,
+          id
+        })
+      }
+    }
+    return sortedFavorites;
+  }
+
 
   return (
     <BrowserRouter>
@@ -23,7 +58,7 @@ function App({ offers }) {
           <SignIn />
         </Route>
         <Route exact path={FAVORITES}>
-          <Favorites />
+          <Favorites favorites={sortFavorites()} />
         </Route>
         <Route exact path={ROOM}>
           <Room />

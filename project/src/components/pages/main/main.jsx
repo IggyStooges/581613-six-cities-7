@@ -1,5 +1,5 @@
 import React from 'react';
-import PlaceCard from './place-card/place-card';
+import OffersList from './offers-list/offers-list';
 import PropTypes from 'prop-types';
 import offerProp from '../../app/app.prop';
 
@@ -94,16 +94,7 @@ function Main({offers}) {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {offers.map(({price, previewImage, title, type, rating, id}) => (
-                  <PlaceCard
-                    key={id}
-                    rating={rating}
-                    apartmentType={type}
-                    title={title}
-                    previewImage={previewImage}
-                    price={price}
-                  />
-                ))}
+                <OffersList offers={offers} />
               </div>
             </section>
             <div className="cities__right-section">

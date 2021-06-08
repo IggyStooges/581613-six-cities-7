@@ -1,15 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import placeCardProp from './favorites-place-card.prop';
 
-function PlaceCard({price, previewImage, title, apartmentType, rating, onMouseOver}) {
+function PlaceCard({ price, previewImage, apartmentType, rating, title }) {
   return (
-    <article className="cities__place-card place-card" onMouseOver={onMouseOver}>
-      <div className="cities__image-wrapper place-card__image-wrapper">
+    <article className="favorites__card place-card">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
+          <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place image" />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -34,16 +34,10 @@ function PlaceCard({price, previewImage, title, apartmentType, rating, onMouseOv
         <p className="place-card__type">{apartmentType}</p>
       </div>
     </article>
+
   );
 }
 
-PlaceCard.propTypes = {
-  price: PropTypes.number.isRequired,
-  previewImage: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  apartmentType: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired,
-  onMouseOver: PropTypes.func.isRequired
-};
+PlaceCard.propTypes = placeCardProp;
 
 export default PlaceCard;
