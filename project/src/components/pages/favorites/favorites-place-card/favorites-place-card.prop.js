@@ -6,5 +6,6 @@ export default PropTypes.shape({
   previewImage: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   apartmentType: PropTypes.oneOf(Object.values(ApartmentType)).isRequired,
-  rating: PropTypes.number.isRequired
+  rating: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 }).isRequired;

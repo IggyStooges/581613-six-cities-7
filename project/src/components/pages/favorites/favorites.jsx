@@ -1,7 +1,11 @@
 import React from 'react';
-import FavoritesCity from './favorites-city/favorites-city'
+import FavoritesCity from './favorites-city/favorites-city';
 import PropTypes from 'prop-types';
 import favoritesCityProp from './favorites-city/favorites-city.prop';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../../const';
+
+const { FAVORITES, MAIN } = AppRoute;
 
 function Favorites({ favorites }) {
   return (
@@ -10,18 +14,18 @@ function Favorites({ favorites }) {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link className="header__logo-link header__logo-link--active" to={MAIN}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <Link className="header__nav-link header__nav-link--profile" to={FAVORITES}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
@@ -54,6 +58,5 @@ function Favorites({ favorites }) {
 }
 
 Favorites.propTypes = PropTypes.arrayOf(favoritesCityProp).isRequired;
-
 
 export default Favorites;

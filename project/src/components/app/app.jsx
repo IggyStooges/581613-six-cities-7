@@ -18,7 +18,7 @@ function App({ offers }) {
 
     for (const { city, price, previewImage, type, rating, title, id } of favorites) {
 
-      const currentCities = sortedFavorites.map(element => element.city);
+      const currentCities = sortedFavorites.map((element) => element.city);
 
       if (currentCities.indexOf(city.name) === -1) {
         sortedFavorites.push({
@@ -29,24 +29,23 @@ function App({ offers }) {
             apartmentType: type,
             rating,
             title,
-            id
+            id,
           }],
-          id
-        })
+          id,
+        });
       } else {
-        sortedFavorites.find(element => element.city === city.name).offers.push({
+        sortedFavorites.find((element) => element.city === city.name).offers.push({
           price,
           previewImage,
           apartmentType: type,
           rating,
           title,
-          id
-        })
+          id,
+        });
       }
     }
     return sortedFavorites;
-  }
-
+  };
 
   return (
     <BrowserRouter>
@@ -61,7 +60,7 @@ function App({ offers }) {
           <Favorites favorites={sortFavorites()} />
         </Route>
         <Route exact path={ROOM}>
-          <Room />
+          <Room offers={offers} />
         </Route>
         <Route>
           <ErrorPage />

@@ -21,7 +21,8 @@ function FavoritesCity({ city, offers }) {
             title={title}
             previewImage={previewImage}
             price={price}
-            />
+            id={id}
+          />
         ))}
       </div>
     </li>

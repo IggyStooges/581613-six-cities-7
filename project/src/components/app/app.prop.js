@@ -1,4 +1,4 @@
-import { number, string, bool, shape, arrayOf, oneOf, objectOf } from 'prop-types';
+import { number, string, bool, shape, arrayOf, oneOf } from 'prop-types';
 import { ApartmentType, CityType } from '../../const';
 
 export default shape({
@@ -12,7 +12,7 @@ export default shape({
     name: oneOf(Object.values(CityType)).isRequired,
   }).isRequired,
   description: string.isRequired,
-  goods: objectOf(string).isRequired,
+  goods: arrayOf(string).isRequired,
   host: shape({
     avatarUrl: string.isRequired,
     id: string.isRequired,
@@ -20,7 +20,7 @@ export default shape({
     name: string.isRequired,
   }).isRequired,
   id: string.isRequired,
-  images: objectOf(string).isRequired,
+  images: arrayOf(string).isRequired,
   isFavorite: bool.isRequired,
   isPremium: bool.isRequired,
   location: shape({

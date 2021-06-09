@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-function PlaceCard({price, previewImage, title, apartmentType, rating, onMouseOver}) {
+function PlaceCard({ price, previewImage, title, apartmentType, rating, onMouseOver, id }) {
   return (
     <article className="cities__place-card place-card" onMouseOver={onMouseOver}>
       <div className="cities__image-wrapper place-card__image-wrapper">
@@ -24,12 +25,12 @@ function PlaceCard({price, previewImage, title, apartmentType, rating, onMouseOv
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${(rating / 5) * 100}%`}}></span>
+            <span style={{ width: `${(rating / 5) * 100}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{apartmentType}</p>
       </div>
@@ -43,7 +44,8 @@ PlaceCard.propTypes = {
   title: PropTypes.string.isRequired,
   apartmentType: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
-  onMouseOver: PropTypes.func.isRequired
+  onMouseOver: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default PlaceCard;

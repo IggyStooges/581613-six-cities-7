@@ -1,7 +1,8 @@
 import React from 'react';
 import placeCardProp from './favorites-place-card.prop';
+import { Link } from 'react-router-dom';
 
-function PlaceCard({ price, previewImage, apartmentType, rating, title }) {
+function PlaceCard({ price, previewImage, apartmentType, rating, title, id }) {
   return (
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
@@ -29,7 +30,7 @@ function PlaceCard({ price, previewImage, apartmentType, rating, title }) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{apartmentType}</p>
       </div>

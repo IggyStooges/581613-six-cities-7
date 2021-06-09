@@ -15,13 +15,13 @@ export const offers = [
     'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     'goods': ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     'host': {
-      'avatar_url': 'img/1.png',
+      'avatar_url': 'img/avatar-angelina.jpg',
       'id': nanoid(),
       'is_pro': true,
       'name': 'Angelina',
     },
     'id': nanoid(),
-    'images': ['img/1.png', 'img/2.png'],
+    'images': ['img/apartment-01.jpg', 'img/apartment-01.jpg', 'img/studio-01.jpg', 'img/apartment-03.jpg', 'img/room.jpg'],
     'is_favorite': true,
     'is_premium': false,
     'location': {
@@ -49,13 +49,13 @@ export const offers = [
     'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     'goods': ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     'host': {
-      'avatar_url': 'img/1.png',
+      'avatar_url': 'img/avatar-max.jpg',
       'id': nanoid(),
       'is_pro': true,
       'name': 'Angelina',
     },
     'id': nanoid(),
-    'images': ['img/1.png', 'img/2.png'],
+    'images': ['img/apartment-01.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-02.jpg'],
     'is_favorite': true,
     'is_premium': false,
     'location': {
@@ -83,13 +83,13 @@ export const offers = [
     'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     'goods': ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     'host': {
-      'avatar_url': 'img/1.png',
+      'avatar_url': 'img/avatar-max.jpg',
       'id': nanoid(),
       'is_pro': true,
       'name': 'Angelina',
     },
     'id': nanoid(),
-    'images': ['img/1.png', 'img/2.png'],
+    'images': ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-03.jpg', 'img/apartment-02.jpg'],
     'is_favorite': false,
     'is_premium': false,
     'location': {
@@ -117,13 +117,13 @@ export const offers = [
     'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     'goods': ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     'host': {
-      'avatar_url': 'img/1.png',
+      'avatar_url': 'img/avatar-angelina.jpg',
       'id': nanoid(),
       'is_pro': true,
       'name': 'Angelina',
     },
     'id': nanoid(),
-    'images': ['img/1.png', 'img/2.png'],
+    'images': ['img/room.jpg', 'img/apartment-01.jpg'],
     'is_favorite': true,
     'is_premium': false,
     'location': {
