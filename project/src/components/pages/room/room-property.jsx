@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { ApartmentType } from '../../../const';
+import roomProp from '../../app/app.prop';
 import CommentForm from './comment-form';
 
-function RoomProperty({ images, title, description, isPremium, apartmentType, rating, bedrooms, maxAdults, price, goods, host }) {
+function RoomProperty({ currentRoom }) {
+  const { images, title, description, isPremium, apartmentType, rating, bedrooms, maxAdults, price, goods, host } = currentRoom;
   const { name, isPro, avatarUrl } = host;
 
   return (
@@ -132,23 +132,6 @@ function RoomProperty({ images, title, description, isPremium, apartmentType, ra
   );
 }
 
-RoomProperty.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string).isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  isPremium: PropTypes.bool.isRequired,
-  apartmentType: PropTypes.oneOf(Object.values(ApartmentType)).isRequired,
-  rating: PropTypes.number.isRequired,
-  bedrooms: PropTypes.number.isRequired,
-  maxAdults: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  goods: PropTypes.arrayOf(PropTypes.string).isRequired,
-  host: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    isPro: PropTypes.bool.isRequired,
-    name: PropTypes.string.isRequired,
-  }).isRequired,
-};
+RoomProperty.propTypes = roomProp;
 
 export default RoomProperty;

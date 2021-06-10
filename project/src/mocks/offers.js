@@ -30,7 +30,7 @@ export const offers = [
       'zoom': 8,
     },
     'max_adults': 4,
-    'preview_image': 'img/1.png',
+    'preview_image': 'img/apartment-01.jpg',
     'price': 120,
     'rating': 4.8,
     'title': 'Beautiful & luxurious studio at great location',

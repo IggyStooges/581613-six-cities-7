@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-
-const RATING_MARKS = [5, 4, 3, 2, 1];
+import RatingStars from './rating-stars';
 
 function CommentForm() {
   const [formState, setFormState] = useState({
@@ -10,32 +9,17 @@ function CommentForm() {
 
   const { rating, comment } = formState;
 
+  const handleRatingChange = (e) => {
+    setFormState({
+      ...formState,
+      rating: e.target.value,
+    });
+  };
+
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
-        {RATING_MARKS.map((mark) => (
-          <React.Fragment key={mark}>
-            <input
-              className="form__rating-input visually-hidden"
-              name="rating"
-              value={`${mark}`}
-              id={`${mark}-stars`}
-              type="radio"
-              checked={rating === `${mark}`}
-              onChange={(e) => setFormState({
-                ...formState,
-                rating: e.target.value,
-              })}
-            />
-            <label htmlFor={`${mark}-stars`} className="reviews__rating-label form__rating-label" title="good">
-              <svg className="form__star-image" width="37" height="33">
-                <use xlinkHref="#icon-star"></use>
-              </svg>
-            </label>
-          </React.Fragment>
-        ))}
-      </div>
+      <RatingStars onChange={handleRatingChange} rating={rating} />
       <textarea
         className="reviews__textarea form__textarea"
         id="review"

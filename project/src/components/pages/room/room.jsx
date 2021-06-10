@@ -13,8 +13,6 @@ function Room({ offers }) {
 
   const currentRoom = offers.find((offer) => offer.id === id);
 
-  const { images, title, description, isPremium, type, rating, bedrooms, maxAdults, price, goods, host } = currentRoom;
-
   return (
     <div className="page">
       <header className="header">
@@ -47,17 +45,7 @@ function Room({ offers }) {
 
       <main className="page__main page__main--property">
         <RoomProperty
-          images={images}
-          title={title}
-          description={description}
-          isPremium={isPremium}
-          apartmentType={type}
-          rating={rating}
-          bedrooms={bedrooms}
-          maxAdults={maxAdults}
-          price={price}
-          goods={goods}
-          host={host}
+          currentRoom={currentRoom}
         />
         <div className="container">
           <section className="near-places places">
@@ -169,4 +157,5 @@ function Room({ offers }) {
 Room.propTypes = {
   offers: PropTypes.arrayOf(roomProp).isRequired,
 };
+
 export default Room;
