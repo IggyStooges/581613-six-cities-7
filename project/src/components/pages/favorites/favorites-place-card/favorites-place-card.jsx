@@ -1,16 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import placeCardProp from './favorites-place-card.prop';
 import { Link } from 'react-router-dom';
 
-function PlaceCard({ price, previewImage, title, apartmentType, rating, onMouseOver, id }) {
+function PlaceCard({ price, previewImage, apartmentType, rating, title, id }) {
   return (
-    <article className="cities__place-card place-card" onMouseOver={onMouseOver}>
-      <div className="cities__image-wrapper place-card__image-wrapper">
+    <article className="favorites__card place-card">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
+          <img className="place-card__image" src={previewImage} width="150" height="110" alt="Place image" />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
@@ -25,7 +25,7 @@ function PlaceCard({ price, previewImage, title, apartmentType, rating, onMouseO
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${(rating / 5) * 100}%` }}></span>
+            <span style={{width: `${(rating / 5) * 100}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -35,17 +35,10 @@ function PlaceCard({ price, previewImage, title, apartmentType, rating, onMouseO
         <p className="place-card__type">{apartmentType}</p>
       </div>
     </article>
+
   );
 }
 
-PlaceCard.propTypes = {
-  price: PropTypes.number.isRequired,
-  previewImage: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  apartmentType: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired,
-  onMouseOver: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-};
+PlaceCard.propTypes = placeCardProp;
 
 export default PlaceCard;

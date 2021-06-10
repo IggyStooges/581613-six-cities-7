@@ -4,64 +4,63 @@ import SignIn from '../pages/sign-in/sign-in';
 import Favorites from '../pages/favorites/favorites';
 import Room from '../pages/room/room';
 import ErrorPage from '../pages/error-page/error-page';
+import appProp from './app.prop';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import PropTypes from 'prop-types';
 
-const cards = [
-  {
-    price: 120,
-    pictureUrl: 'img/apartment-01.jpg',
-    title: 'Beautiful & luxurious apartment at great location',
-    apartmentType: 'Apartment',
-    rating: 80,
-  },
-  {
-    price: 80,
-    pictureUrl: 'img/room.jpg',
-    title: 'Wood and stone place',
-    apartmentType: 'Private room',
-    rating: 80,
-  },
-  {
-    price: 132,
-    pictureUrl: 'img/apartment-02.jpg',
-    title: 'Canal View Prinsengracht',
-    apartmentType: 'Apartment',
-    rating: 80,
-  },
-  {
-    price: 180,
-    pictureUrl: 'img/apartment-03.jpg',
-    title: 'Nice, cozy, warm big bed apartment',
-    apartmentType: 'Apartment',
-    rating: 100,
-  },
-  {
-    price: 80,
-    pictureUrl: 'img/room.jpg',
-    title: 'Wood and stone place',
-    apartmentType: 'Private room',
-    rating: 80,
-  },
-];
-
-function App() {
+function App({ offers }) {
   const { MAIN, SIGN_IN, FAVORITES, ROOM } = AppRoute;
+  const favorites = offers.filter(({ isFavorite }) => isFavorite);
+
+  const sortFavorites = () => {
+    const sortedFavorites = [];
+
+    for (const { city, price, previewImage, type, rating, title, id } of favorites) {
+
+      const currentCities = sortedFavorites.map((element) => element.city);
+
+      if (currentCities.indexOf(city.name) === -1) {
+        sortedFavorites.push({
+          city: city.name,
+          offers: [{
+            price,
+            previewImage,
+            apartmentType: type,
+            rating,
+            title,
+            id,
+          }],
+          id,
+        });
+      } else {
+        sortedFavorites.find((element) => element.city === city.name).offers.push({
+          price,
+          previewImage,
+          apartmentType: type,
+          rating,
+          title,
+          id,
+        });
+      }
+    }
+    return sortedFavorites;
+  };
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={MAIN}>
-          <Main cards={cards} />
+          <Main offers={offers} />
         </Route>
         <Route exact path={SIGN_IN}>
           <SignIn />
         </Route>
         <Route exact path={FAVORITES}>
-          <Favorites />
+          <Favorites favorites={sortFavorites()} />
         </Route>
         <Route exact path={ROOM}>
-          <Room />
+          <Room offers={offers} />
         </Route>
         <Route>
           <ErrorPage />
@@ -70,5 +69,9 @@ function App() {
     </BrowserRouter>
   );
 }
+
+App.propTypes = {
+  offers: PropTypes.arrayOf(appProp).isRequired,
+};
 
 export default App;
