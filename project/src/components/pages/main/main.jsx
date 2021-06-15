@@ -5,10 +5,15 @@ import PropTypes from 'prop-types';
 import offerProp from '../../app/app.prop';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
-
+import sortByCity from '../../../utils/sortByCity';
 const { FAVORITES, MAIN } = AppRoute;
 
 function Main({offers}) {
+  const sortedOffers= sortByCity(offers);
+
+  const currentCity = sortedOffers.find(offer => offer.city === 'Amsterdam');
+  const { cityLocation, offers: currentCityOffers } = currentCity;
+  const cityOffersLocations = currentCityOffers.map(offer => offer.location);
 
   return (
     <div className="page page--gray page--main">
@@ -101,7 +106,7 @@ function Main({offers}) {
               <OffersList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"><Map /></section>
+              <section className="cities__map map"><Map cityLocation={cityLocation} locations={cityOffersLocations}/></section>
             </div>
           </div>
         </div>
