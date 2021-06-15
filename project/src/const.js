@@ -25,7 +25,7 @@ export const CITY = [52.38333, 4.9];
 
 export const ICON = {
   iconUrl: 'img/pin.svg',
-  iconSize: [30, 30],
+  iconSize: [27, 39],
 };
 
 export const ZOOM = 12;

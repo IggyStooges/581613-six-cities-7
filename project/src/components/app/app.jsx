@@ -7,14 +7,14 @@ import ErrorPage from '../pages/error-page/error-page';
 import appProp from './app.prop';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import sortByCity from '../../utils/sortByCity';
+import groupOffersByCity from '../../utils/sortByCity';
 import PropTypes from 'prop-types';
 
 function App({ offers }) {
   const { MAIN, SIGN_IN, FAVORITES, ROOM } = AppRoute;
   const favorites = offers.filter(({ isFavorite }) => isFavorite);
 
-  const sortedFavorites = sortByCity(favorites);
+  const sortedFavorites = groupOffersByCity(favorites);
 
   return (
     <BrowserRouter>

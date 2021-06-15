@@ -11,9 +11,10 @@ const { FAVORITES, MAIN } = AppRoute;
 function Main({offers}) {
   const sortedOffers= sortByCity(offers);
 
-  const currentCity = sortedOffers.find(offer => offer.city === 'Amsterdam');
-  const { cityLocation, offers: currentCityOffers } = currentCity;
-  const cityOffersLocations = currentCityOffers.map(offer => offer.location);
+  const currentCity = sortedOffers['Amsterdam'];
+  const { location, offers: currentCityOffers } = currentCity;
+  const cityOffersLocations = currentCityOffers.map((offer) => offer.location);
+  const cityLocation = Object.values(location).slice[0, 1];
 
   return (
     <div className="page page--gray page--main">

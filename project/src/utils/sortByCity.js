@@ -1,38 +1,18 @@
-const sortOffers = (offers) => {
-  const sortedOffers = [];
+const groupOffersByCity = (offers) => {
 
-  for (const { city, price, previewImage, type, rating, title, id, location } of offers) {
-
-    const currentCities = sortedOffers.map((element) => element.city);
-
-    if (currentCities.indexOf(city.name) === -1) {
-      sortedOffers.push({
-        id,
-        city: city.name,
-        location: city.location,
-        offers: [{
-          price,
-          previewImage,
-          apartmentType: type,
-          rating,
-          title,
-          id,
-          location,
-        }],
-      });
-    } else {
-      sortedOffers.find((element) => element.city === city.name).offers.push({
-        price,
-        previewImage,
-        apartmentType: type,
-        rating,
-        title,
-        id,
-        location,
-      });
+  const sortedOffers = offers.reduce((acc, value) => {
+    if (!acc[value.city.name]) {
+      acc[value.city.name] = {};
+      acc[value.city.name].offers = [];
+      acc[value.city.name].location = value.city.location;
     }
-  }
+
+    acc[value.city.name].offers.push(value);
+
+    return acc;
+  }, {});
+
   return sortedOffers;
 };
 
-export default sortOffers;
+export default groupOffersByCity;
