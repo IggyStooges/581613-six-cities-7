@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import PropTypes from 'prop-types';
-import { CITY, ZOOM, ICON } from '../../../../const';
+import { CITY, ZOOM, ICON } from '../../../const';
 
 const icon = leaflet.icon({
   iconUrl: ICON.iconUrl,
@@ -46,7 +46,7 @@ function Map({ cityLocation = CITY, locations }) {
   });
 
   return (
-    <div ref={mapRef} style={{ height: '100%' }}></div>
+    <div ref={mapRef} style={{ height: '100%', width: '100%' }}></div>
   );
 }
 
