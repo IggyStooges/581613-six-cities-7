@@ -7,45 +7,14 @@ import ErrorPage from '../pages/error-page/error-page';
 import appProp from './app.prop';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import groupOffersByCity from '../../utils/sortByCity';
 import PropTypes from 'prop-types';
 
 function App({ offers }) {
   const { MAIN, SIGN_IN, FAVORITES, ROOM } = AppRoute;
   const favorites = offers.filter(({ isFavorite }) => isFavorite);
 
-  const sortFavorites = () => {
-    const sortedFavorites = [];
-
-    for (const { city, price, previewImage, type, rating, title, id } of favorites) {
-
-      const currentCities = sortedFavorites.map((element) => element.city);
-
-      if (currentCities.indexOf(city.name) === -1) {
-        sortedFavorites.push({
-          city: city.name,
-          offers: [{
-            price,
-            previewImage,
-            apartmentType: type,
-            rating,
-            title,
-            id,
-          }],
-          id,
-        });
-      } else {
-        sortedFavorites.find((element) => element.city === city.name).offers.push({
-          price,
-          previewImage,
-          apartmentType: type,
-          rating,
-          title,
-          id,
-        });
-      }
-    }
-    return sortedFavorites;
-  };
+  const sortedFavorites = groupOffersByCity(favorites);
 
   return (
     <BrowserRouter>
@@ -57,7 +26,7 @@ function App({ offers }) {
           <SignIn />
         </Route>
         <Route exact path={FAVORITES}>
-          <Favorites favorites={sortFavorites()} />
+          <Favorites favorites={sortedFavorites} />
         </Route>
         <Route exact path={ROOM}>
           <Room offers={offers} />

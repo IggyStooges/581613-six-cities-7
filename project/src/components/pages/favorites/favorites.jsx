@@ -42,11 +42,11 @@ function Favorites({ favorites }) {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              {favorites.map(({ city, offers, id }) => (
+              {Object.entries(favorites).map((favorite) => (
                 <FavoritesCity
-                  key={id}
-                  city={city}
-                  offers={offers}
+                  key={favorite[0]}
+                  city={favorite[0]}
+                  offers={favorite[1].offers}
                 />
               ))}
             </ul>
