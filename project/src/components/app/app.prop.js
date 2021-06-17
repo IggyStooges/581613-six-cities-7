@@ -45,6 +45,6 @@ export const reviewProp = shape({
     avatarUrl: string.isRequired,
     id: string.isRequired,
     isPro: bool.isRequired,
-    name: string.isRequired
-  })
+    name: string.isRequired,
+  }),
 }).isRequired;

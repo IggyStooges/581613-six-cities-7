@@ -5,7 +5,7 @@ import CommentForm from './comment-form';
 import ReviewsList from './reviews/reviews-list';
 import Map from '../../common/map/map';
 
-function RoomProperty({ currentRoom, reviews, locations, cityLocation }) {
+function RoomProperty({ currentRoom, reviews, nearbyOffers }) {
   const { images, title, description, isPremium, apartmentType, rating, bedrooms, maxAdults, price, goods, host } = currentRoom;
   const { name, isPro, avatarUrl } = host;
 
@@ -15,7 +15,7 @@ function RoomProperty({ currentRoom, reviews, locations, cityLocation }) {
         <div className="property__gallery">
           {
             images.map((image) => (
-              <div className="property__image-wrapper" id={image} key={image}>
+              <div className="property__image-wrapper" key={image}>
                 <img className="property__image" src={image} alt="Photo studio" />
               </div>
             ))
@@ -107,19 +107,15 @@ function RoomProperty({ currentRoom, reviews, locations, cityLocation }) {
           </section>
         </div>
       </div>
-      <section className="property__map map"><Map locations={locations} cityLocation={cityLocation} /></section>
+      <section className="property__map map"><Map offers={nearbyOffers} /></section>
     </section>
   );
 }
 
 RoomProperty.propTypes = {
+  currentRoom: offerProp,
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
-  cityLocation: PropTypes.arrayOf(PropTypes.number),
-  locations: PropTypes.arrayOf(PropTypes.shape({
-    'latitude': PropTypes.number.isRequired,
-    'longitude': PropTypes.number.isRequired,
-    'zoom': PropTypes.number.isRequired,
-  })).isRequired,
+  nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
 };
 
 export default RoomProperty;

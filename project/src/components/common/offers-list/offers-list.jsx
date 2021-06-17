@@ -28,7 +28,7 @@ function OffersList({ offers, className }) {
 
 OffersList.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
-  className: PropTypes.string.isRequired
+  className: PropTypes.string.isRequired,
 };
 
 export default OffersList;

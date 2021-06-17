@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import {offerProp, reviewProp} from '../../app/app.prop';
 import OffersList from '../../common/offers-list/offers-list';
 import { useParams } from 'react-router-dom';
-import sortByCity from '../../../utils/sortByCity';
 import RoomProperty from './room-property';
 
 const { FAVORITES, MAIN } = AppRoute;
@@ -14,13 +13,6 @@ function Room({ offers, reviews, nearbyOffers }) {
   const { id } = useParams();
 
   const currentRoom = offers.find((offer) => offer.id === id) || nearbyOffers.find((offer) => offer.id === id);
-
-  const sortedOffers = sortByCity(nearbyOffers);
-  const currentCity = sortedOffers['Amsterdam'];
-  const { location, offers: currentCityOffers } = currentCity;
-  const neighborhoodLocations = currentCityOffers.map((offer) => offer.location);
-  console.log(neighborhoodLocations)
-  const cityLocation = Object.values(location).slice[0, 1];
 
   return (
     <div className="page">
@@ -56,8 +48,7 @@ function Room({ offers, reviews, nearbyOffers }) {
         <RoomProperty
           currentRoom={currentRoom}
           reviews={reviews}
-          locations={neighborhoodLocations}
-          cityLocation={cityLocation}
+          nearbyOffers={nearbyOffers}
         />
         <div className="container">
           <section className="near-places places">
@@ -73,6 +64,7 @@ function Room({ offers, reviews, nearbyOffers }) {
 Room.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
+  nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
 };
 
 export default Room;

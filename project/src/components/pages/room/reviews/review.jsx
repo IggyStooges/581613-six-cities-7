@@ -26,7 +26,7 @@ function Review({ review }) {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{moment(date).format("MMMM YYYY")}</time>
+        <time className="reviews__time" dateTime="2019-04-24">{moment(date).format('MMMM YYYY')}</time>
       </div>
     </li>
   );
