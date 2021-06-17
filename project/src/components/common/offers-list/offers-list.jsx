@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import PlaceCard from '../place-card/place-card';
-import offerProp from '../../../app/app.prop';
+import { offerProp } from '../../app/app.prop';
+import { OffersListType, OffersListClassNames } from '../../../const';
 
-function OffersList({ offers }) {
+function OffersList({ offers, type = OffersListType.MAIN}) {
   // пока активная карточка не используется, но требуется добавить в стейт по заданию, для дальнейшего использования
   // eslint-disable-next-line no-unused-vars
   const [activeCardId, setActiveCardId] = useState('');
 
+  const currentClassName = type === OffersListType.NEARBY ? OffersListClassNames.NEARBY : OffersListClassNames.MAIN;
+
   return (
-    <div className="cities__places-list places__list tabs__content">
-      {offers.map(({ price, previewImage, title, type, rating, id }) => (
+    <div className={`places__list tabs__content ${currentClassName}`}>
+      {offers.map(({ price, previewImage, title, type: offerType, rating, id }) => (
         <PlaceCard
           key={id}
           rating={rating}
-          apartmentType={type}
+          apartmentType={offerType}
           title={title}
           previewImage={previewImage}
           price={price}
@@ -28,6 +31,7 @@ function OffersList({ offers }) {
 
 OffersList.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
+  type: PropTypes.oneOf(Object.values(OffersListType)),
 };
 
 export default OffersList;

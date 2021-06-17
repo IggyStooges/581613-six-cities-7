@@ -5,6 +5,16 @@ export const ApartmentType = {
   HOTEL: 'hotel',
 };
 
+export const OffersListType = {
+  NEARBY: 'nearby',
+  MAIN: 'main',
+};
+
+export const OffersListClassNames = {
+  NEARBY: 'near-places__list',
+  MAIN: 'cities__places-list',
+};
+
 export const CityType = {
   PARIS: 'Paris',
   COLOGNE: 'Cologne',

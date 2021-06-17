@@ -1,7 +1,7 @@
 import { number, string, bool, shape, arrayOf, oneOf } from 'prop-types';
 import { ApartmentType, CityType } from '../../const';
 
-export default shape({
+export const offerProp = shape({
   bedrooms: number.isRequired,
   city: shape({
     location: shape({
@@ -34,4 +34,17 @@ export default shape({
   rating: number.isRequired,
   title: string.isRequired,
   type: oneOf(Object.values(ApartmentType)).isRequired,
+}).isRequired;
+
+export const reviewProp = shape({
+  comment: string.isRequired,
+  date: string.isRequired,
+  id: string.isRequired,
+  rating: number.isRequired,
+  user: shape({
+    avatarUrl: string.isRequired,
+    id: string.isRequired,
+    isPro: bool.isRequired,
+    name: string.isRequired,
+  }),
 }).isRequired;
