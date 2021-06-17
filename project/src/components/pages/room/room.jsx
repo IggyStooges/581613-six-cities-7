@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../../const';
+import { AppRoute, OffersListType } from '../../../const';
 import PropTypes from 'prop-types';
 import {offerProp, reviewProp} from '../../app/app.prop';
 import OffersList from '../../common/offers-list/offers-list';
@@ -53,7 +53,7 @@ function Room({ offers, reviews, nearbyOffers }) {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <OffersList offers={nearbyOffers} className="near-places__list"/>
+            <OffersList offers={nearbyOffers} type={OffersListType.NEARBY} />
           </section>
         </div>
       </main>
