@@ -6,8 +6,8 @@ export const offers = [
     'bedrooms': 3,
     'city': {
       'location': {
-        'latitude': 52.370216,
-        'longitude': 4.895168,
+        'latitude': 50.935598,
+        'longitude': 6.938392,
         'zoom': 10,
       },
       'name': 'Cologne',
@@ -40,8 +40,8 @@ export const offers = [
     'bedrooms': 3,
     'city': {
       'location': {
-        'latitude': 52.370216,
-        'longitude': 4.895168,
+        'latitude': 50.935598,
+        'longitude': 6.938392,
         'zoom': 10,
       },
       'name': 'Cologne',

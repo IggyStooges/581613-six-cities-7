@@ -6,7 +6,7 @@ import ReviewsList from './reviews/reviews-list';
 import Map from '../../common/map/map';
 
 function RoomProperty({ currentRoom, reviews, nearbyOffers }) {
-  const { images, title, description, isPremium, apartmentType, rating, bedrooms, maxAdults, price, goods, host } = currentRoom;
+  const { images, title, description, isPremium, apartmentType, rating, bedrooms, maxAdults, price, goods, host, city } = currentRoom;
   const { name, isPro, avatarUrl } = host;
 
   return (
@@ -107,7 +107,7 @@ function RoomProperty({ currentRoom, reviews, nearbyOffers }) {
           </section>
         </div>
       </div>
-      <section className="property__map map"><Map offers={nearbyOffers} /></section>
+      <section className="property__map map">{nearbyOffers && <Map offers={nearbyOffers} cityLocation={city.location} />}</section>
     </section>
   );
 }

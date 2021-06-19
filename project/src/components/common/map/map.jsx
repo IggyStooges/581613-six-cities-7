@@ -1,35 +1,36 @@
 import React, { useEffect, useRef, useState } from 'react';
 import leaflet from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import PropTypes from 'prop-types';
 import { offerProp } from '../../app/app.prop';
-import sortByCity from '../../../utils/sortByCity';
 import { ZOOM, ICON } from '../../../const';
+import 'leaflet/dist/leaflet.css';
 
 const icon = leaflet.icon({
   iconUrl: ICON.iconUrl,
   iconSize: ICON.iconSize,
 });
 
-const offerCords = [52.3709553943508, 4.89309666406198];
-
-function Map({ offers }) {
+function Map({ cityLocation, offers }) {
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
-
-  const sortedOffers = sortByCity(offers);
-  const currentCity = sortedOffers['Amsterdam'];
-  const { location: cityLocation, offers: currentCityOffers } = currentCity;
-  const locations = currentCityOffers.map((offer) => offer.location);
+  const locations = offers.map((offer) => offer.location);
   const cityLocationCoordinates = Object.values(cityLocation).slice(0, 2);
+
+  useEffect(() => {
+    map && map.remove();
+    setMap(null);
+  }, [cityLocation, offers]);
 
   useEffect(() => {
     const { current: mapContainer } = mapRef;
 
     if (mapContainer && map === null) {
       const instance = leaflet.map(mapContainer, {
-        center: cityLocationCoordinates,
-        zoom: ZOOM,
+        center: {
+          lat: cityLocation.latitude,
+          lng: cityLocation.longitude,
+        },
+        zoom: cityLocation.zoom,
         zoomControl: false,
         marker: true,
       });
@@ -43,7 +44,7 @@ function Map({ offers }) {
       instance.setView(cityLocationCoordinates, ZOOM);
 
       leaflet
-        .marker(offerCords, { icon })
+        .marker(cityLocationCoordinates, { icon })
         .addTo(instance);
 
       locations.forEach((location) => {
@@ -56,9 +57,9 @@ function Map({ offers }) {
       });
 
       setMap(instance);
-
     }
-  }, [locations, mapRef, map]);
+
+  }, [mapRef, map]);
 
   return (
     <div ref={mapRef} style={{ height: '100%', width: '100%' }}></div>
@@ -67,7 +68,11 @@ function Map({ offers }) {
 
 Map.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
+  cityLocation: PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+    zoom: PropTypes.number.isRequired,
+  }).isRequired,
 };
-
 
 export default Map;
