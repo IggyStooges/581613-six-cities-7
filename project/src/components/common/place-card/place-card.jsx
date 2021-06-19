@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { ActionCreator } from '../../../store/action';
+import { connect } from 'react-redux';
 
-function PlaceCard({ price, previewImage, title, apartmentType, rating, onMouseOver, id }) {
+function PlaceCard({ price, previewImage, title, apartmentType, rating, location, onCardHover, id }) {
   return (
-    <article className="cities__place-card place-card" onMouseOver={onMouseOver}>
+    <article className="cities__place-card place-card" onMouseOver={() => onCardHover(location)}>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
@@ -44,8 +46,20 @@ PlaceCard.propTypes = {
   title: PropTypes.string.isRequired,
   apartmentType: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
-  onMouseOver: PropTypes.func.isRequired,
+  onCardHover: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+    zoom: PropTypes.number.isRequired,
+  }),
 };
 
-export default PlaceCard;
+const mapDispatchToProps = (dispatch) => ({
+  onCardHover(location) {
+    dispatch(ActionCreator.hoverCityCard(location));
+  },
+});
+
+export { PlaceCard };
+export default connect(null, mapDispatchToProps)(PlaceCard);

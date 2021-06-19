@@ -35,7 +35,15 @@ export const CITY = [52.38333, 4.9];
 
 export const ICON = {
   iconUrl: 'img/pin.svg',
+  activeIconUrl: 'img/pin-active.svg',
   iconSize: [27, 39],
 };
 
 export const ZOOM = 12;
+
+export const sortOptions = {
+  POPULAR: 'Popular',
+  PRICE_TO_HIGH: 'Price: low to high',
+  PRICE_TO_LOW: 'Price: high to low',
+  TOP_RATED_FIRST: 'Top rated first',
+};

@@ -1,25 +1,31 @@
 import React, { useEffect, useRef, useState } from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { offerProp } from '../../app/app.prop';
 import { ZOOM, ICON } from '../../../const';
 import 'leaflet/dist/leaflet.css';
 
-const icon = leaflet.icon({
-  iconUrl: ICON.iconUrl,
-  iconSize: ICON.iconSize,
-});
-
-function Map({ cityLocation, offers }) {
+function Map({ cityLocation, offers, hoveredCardLocation }) {
   const mapRef = useRef(null);
   const [map, setMap] = useState(null);
   const locations = offers.map((offer) => offer.location);
   const cityLocationCoordinates = Object.values(cityLocation).slice(0, 2);
 
+  console.log(locations)
+
+  const checkActiveLocation = (location) => {
+    if (!hoveredCardLocation) {
+      return false;
+    }
+
+    return location.latitude === hoveredCardLocation.latitude && location.longitude === hoveredCardLocation.longitude;
+  }
+
   useEffect(() => {
     map && map.remove();
     setMap(null);
-  }, [cityLocation, offers]);
+  }, [cityLocation]);
 
   useEffect(() => {
     const { current: mapContainer } = mapRef;
@@ -42,12 +48,22 @@ function Map({ cityLocation, offers }) {
         .addTo(instance);
 
       instance.setView(cityLocationCoordinates, ZOOM);
-
-      leaflet
-        .marker(cityLocationCoordinates, { icon })
-        .addTo(instance);
-
       locations.forEach((location) => {
+        const isActiveIcon = checkActiveLocation(location);
+        let icon = null;
+
+        if (isActiveIcon) {
+          icon = leaflet.icon({
+            iconUrl: ICON.activeIconUrl,
+            iconSize: ICON.iconSize,
+          })
+        } else {
+          icon = leaflet.icon({
+            iconUrl: ICON.iconUrl,
+            iconSize: ICON.iconSize,
+          })
+        }
+
         leaflet
           .marker({
             lat: location.latitude,
@@ -73,6 +89,16 @@ Map.propTypes = {
     longitude: PropTypes.number.isRequired,
     zoom: PropTypes.number.isRequired,
   }).isRequired,
+  hoveredCardLocation: PropTypes.shape({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+    zoom: PropTypes.number.isRequired,
+  }),
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  hoveredCardLocation: state.hoveredCardLocation,
+});
+
+export { Map };
+export default connect(mapStateToProps, null)(Map);

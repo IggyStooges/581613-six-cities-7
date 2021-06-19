@@ -11,6 +11,7 @@ const initialState = {
   city: CityType.PARIS,
   offers: adaptOffers,
   nearbyOffers: adaptNearbyOffers,
+  hoveredCardLocation: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,6 +20,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         city: action.payload,
+      };
+    case ActionType.HOVER_CITY_CARD:
+      return {
+        ...state,
+        hoveredCardLocation: action.payload,
       };
     default:
       return state;

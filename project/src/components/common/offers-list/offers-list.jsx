@@ -5,15 +5,11 @@ import { offerProp } from '../../app/app.prop';
 import { OffersListType, OffersListClassNames } from '../../../const';
 
 function OffersList({ offers, type = OffersListType.MAIN}) {
-  // пока активная карточка не используется, но требуется добавить в стейт по заданию, для дальнейшего использования
-  // eslint-disable-next-line no-unused-vars
-  const [activeCardId, setActiveCardId] = useState('');
-
   const currentClassName = type === OffersListType.NEARBY ? OffersListClassNames.NEARBY : OffersListClassNames.MAIN;
 
   return (
     <div className={`places__list tabs__content ${currentClassName}`}>
-      {offers.map(({ price, previewImage, title, type: offerType, rating, id }) => (
+      {offers.map(({ price, previewImage, title, type: offerType, rating, location, id }) => (
         <PlaceCard
           key={id}
           rating={rating}
@@ -21,7 +17,7 @@ function OffersList({ offers, type = OffersListType.MAIN}) {
           title={title}
           previewImage={previewImage}
           price={price}
-          onMouseOver={() => setActiveCardId(id)}
+          location={location}
           id={id}
         />
       ))}
