@@ -8,6 +8,7 @@ import { offerProp, reviewProp } from './app.prop';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import groupOffersByCity from '../../utils/sortByCity';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 function App({ offers, reviews, nearbyOffers }) {
@@ -45,4 +46,10 @@ App.propTypes = {
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+  nearbyOffers: state.nearbyOffers,
+});
+
+export {App};
+export default connect(mapStateToProps, null)(App);
