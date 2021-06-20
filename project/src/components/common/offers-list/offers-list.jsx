@@ -4,12 +4,12 @@ import PlaceCard from '../place-card/place-card';
 import { offerProp } from '../../app/app.prop';
 import { OffersListType, OffersListClassNames } from '../../../const';
 
-function OffersList({ offers, type = OffersListType.MAIN}) {
+function OffersList({ offers, type = OffersListType.MAIN }) {
   const currentClassName = type === OffersListType.NEARBY ? OffersListClassNames.NEARBY : OffersListClassNames.MAIN;
 
   return (
     <div className={`places__list tabs__content ${currentClassName}`}>
-      {offers.map(({ price, previewImage, title, type: offerType, rating, location, id }) => (
+      {offers.map(({ price, previewImage, title, type: offerType, rating, location, id }, index) => (
         <PlaceCard
           key={id}
           rating={rating}
@@ -19,6 +19,7 @@ function OffersList({ offers, type = OffersListType.MAIN}) {
           price={price}
           location={location}
           id={id}
+          index={index}
         />
       ))}
     </div>

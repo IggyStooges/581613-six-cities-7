@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { ActionCreator } from '../../../store/action';
 import { connect } from 'react-redux';
 
-function PlaceCard({ price, previewImage, title, apartmentType, rating, location, onCardHover, id }) {
+function PlaceCard({ price, previewImage, title, apartmentType, rating, onCardHover, id, index }) {
   return (
     <article
       className="cities__place-card place-card"
-      onMouseOver={() => onCardHover(location)}
+      onMouseOver={() => onCardHover(index)}
       onMouseLeave={() => onCardHover(null)}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
@@ -52,16 +52,12 @@ PlaceCard.propTypes = {
   rating: PropTypes.number.isRequired,
   onCardHover: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
-  location: PropTypes.shape({
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-    zoom: PropTypes.number.isRequired,
-  }),
+  index: PropTypes.number,
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onCardHover(location) {
-    dispatch(ActionCreator.hoverCityCard(location));
+  onCardHover(index) {
+    dispatch(ActionCreator.hoverCityCard(index));
   },
 });
 

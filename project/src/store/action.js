@@ -16,8 +16,8 @@ export const ActionCreator = {
   getNearbyOffers: () => ({
     type: ActionType.GET_NEARBY_OFFERS,
   }),
-  hoverCityCard: (offerLocation) => ({
+  hoverCityCard: (hoverCardIndex) => ({
     type: ActionType.HOVER_CITY_CARD,
-    payload: offerLocation,
+    payload: hoverCardIndex,
   }),
 };
