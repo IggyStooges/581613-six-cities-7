@@ -4,14 +4,13 @@ import OffersList from '../../common/offers-list/offers-list';
 import Map from '../../common/map/map';
 import { Link } from 'react-router-dom';
 import getCurrentCityOffers from '../../../getCurrentCityOffers';
-import { AppRoute, CityType } from '../../../const';
+import { AppRoute, CityType, sortOptions } from '../../../const';
 import { offerProp } from '../../app/app.prop';
 import { connect } from 'react-redux';
 import { ActionCreator } from '../../../store/action';
 import CitiesList from './cities-list';
 import SortOptions from './sort-options';
 const { FAVORITES, MAIN } = AppRoute;
-import { sortOptions } from '../../../const';
 
 function Main({ offers, city = CityType.PARIS, onCityChange }) {
   const { TOP_RATED_FIRST, PRICE_TO_HIGH, PRICE_TO_LOW, POPULAR } = sortOptions;
@@ -23,9 +22,7 @@ function Main({ offers, city = CityType.PARIS, onCityChange }) {
   const sortOffers = (sortOption) => {
     const currentCityOffers = currentCityData ? currentCityData.offers : [];
 
-    const sortedOffersByPrice = currentCityOffers.sort((firstOffer, secondOffer) => {
-      return secondOffer.price - firstOffer.price;
-    });
+    const sortedOffersByPrice = currentCityOffers.sort((firstOffer, secondOffer) => secondOffer.price - firstOffer.price);
 
     switch (sortOption) {
       case PRICE_TO_LOW:
@@ -33,9 +30,7 @@ function Main({ offers, city = CityType.PARIS, onCityChange }) {
       case PRICE_TO_HIGH:
         return sortedOffersByPrice.reverse();
       case TOP_RATED_FIRST:
-        return currentCityOffers.sort((firstOffer, secondOffer) => {
-          return secondOffer.rating - firstOffer.rating;
-        });
+        return currentCityOffers.sort((firstOffer, secondOffer) => secondOffer.rating - firstOffer.rating);
       default:
         return currentCityOffers;
     }
@@ -43,7 +38,7 @@ function Main({ offers, city = CityType.PARIS, onCityChange }) {
 
   useEffect(() => {
     setSortedOffers(sortOffers(currentSortOption));
-  }, [currentSortOption, city])
+  }, [currentSortOption, city]);
 
   const handleSortOptionClick = (option) => setCurrentSortOption(option);
 

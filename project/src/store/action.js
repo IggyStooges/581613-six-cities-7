@@ -2,7 +2,7 @@ export const ActionType = {
   CHANGE_CITY: 'changeCity',
   GET_OFFERS: 'getOffers',
   GET_NEARBY_OFFERS: 'getNearbyOffers',
-  HOVER_CITY_CARD: 'hoverCityCard'
+  HOVER_CITY_CARD: 'hoverCityCard',
 };
 
 export const ActionCreator = {

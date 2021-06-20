@@ -6,7 +6,11 @@ import { connect } from 'react-redux';
 
 function PlaceCard({ price, previewImage, title, apartmentType, rating, location, onCardHover, id }) {
   return (
-    <article className="cities__place-card place-card" onMouseOver={() => onCardHover(location)}>
+    <article
+      className="cities__place-card place-card"
+      onMouseOver={() => onCardHover(location)}
+      onMouseLeave={() => onCardHover(null)}
+    >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />

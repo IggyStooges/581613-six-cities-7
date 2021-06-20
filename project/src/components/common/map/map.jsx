@@ -12,20 +12,18 @@ function Map({ cityLocation, offers, hoveredCardLocation }) {
   const locations = offers.map((offer) => offer.location);
   const cityLocationCoordinates = Object.values(cityLocation).slice(0, 2);
 
-  console.log(locations)
-
   const checkActiveLocation = (location) => {
     if (!hoveredCardLocation) {
       return false;
     }
 
     return location.latitude === hoveredCardLocation.latitude && location.longitude === hoveredCardLocation.longitude;
-  }
+  };
 
   useEffect(() => {
     map && map.remove();
     setMap(null);
-  }, [cityLocation]);
+  }, [cityLocation, offers, hoveredCardLocation]);
 
   useEffect(() => {
     const { current: mapContainer } = mapRef;
@@ -48,6 +46,7 @@ function Map({ cityLocation, offers, hoveredCardLocation }) {
         .addTo(instance);
 
       instance.setView(cityLocationCoordinates, ZOOM);
+
       locations.forEach((location) => {
         const isActiveIcon = checkActiveLocation(location);
         let icon = null;
@@ -56,12 +55,12 @@ function Map({ cityLocation, offers, hoveredCardLocation }) {
           icon = leaflet.icon({
             iconUrl: ICON.activeIconUrl,
             iconSize: ICON.iconSize,
-          })
+          });
         } else {
           icon = leaflet.icon({
             iconUrl: ICON.iconUrl,
             iconSize: ICON.iconSize,
-          })
+          });
         }
 
         leaflet
@@ -75,7 +74,7 @@ function Map({ cityLocation, offers, hoveredCardLocation }) {
       setMap(instance);
     }
 
-  }, [mapRef, map]);
+  }, [mapRef, map, hoveredCardLocation]);
 
   return (
     <div ref={mapRef} style={{ height: '100%', width: '100%' }}></div>

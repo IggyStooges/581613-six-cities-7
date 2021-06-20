@@ -11,7 +11,7 @@ const initialState = {
   city: CityType.PARIS,
   offers: adaptOffers,
   nearbyOffers: adaptNearbyOffers,
-  hoveredCardLocation: null
+  hoveredCardLocation: null,
 };
 
 const reducer = (state = initialState, action) => {
