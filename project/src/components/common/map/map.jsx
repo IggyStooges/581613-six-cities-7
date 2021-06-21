@@ -35,7 +35,7 @@ function Map({ cityLocation, offers, hoverCardIndex }) {
       mapInstance.current = instance;
     }
 
-  }, [mapRef, hoverCardIndex]);
+  }, [mapRef, hoverCardIndex, cityLocation]);
 
   useEffect(() => {
 
@@ -88,7 +88,7 @@ function Map({ cityLocation, offers, hoverCardIndex }) {
       });
     }
 
-  }, [hoverCardIndex]);
+  }, [hoverCardIndex, locations]);
 
   return (
     <div ref={mapRef} style={{ height: '100%', width: '100%' }}></div>

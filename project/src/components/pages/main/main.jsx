@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import OffersList from '../../common/offers-list/offers-list';
 import Map from '../../common/map/map';
@@ -17,7 +17,6 @@ function Main({ offers, city = CityType.PARIS, onCityChange }) {
 
   const [currentSortOption, setCurrentSortOption] = useState(POPULAR);
   const currentCityData = getCurrentCityOffers(offers, city) ? getCurrentCityOffers(offers, city) : undefined;
-  const [sortedOffers, setSortedOffers] = useState(currentCityData?.offers);
 
   const sortOffers = (sortOption) => {
     const currentCityOffers = currentCityData ? currentCityData.offers : [];
@@ -36,9 +35,7 @@ function Main({ offers, city = CityType.PARIS, onCityChange }) {
     }
   };
 
-  useEffect(() => {
-    setSortedOffers(sortOffers(currentSortOption));
-  }, [currentSortOption, city]);
+  const sortedOffers = sortOffers(currentSortOption);
 
   const handleSortOptionClick = (option) => setCurrentSortOption(option);
 
