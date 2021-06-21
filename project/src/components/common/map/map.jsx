@@ -1,30 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { offerProp } from '../../app/app.prop';
 import { ZOOM, ICON } from '../../../const';
 import 'leaflet/dist/leaflet.css';
 
-const icon = leaflet.icon({
-  iconUrl: ICON.iconUrl,
-  iconSize: ICON.iconSize,
-});
-
-function Map({ cityLocation, offers }) {
+function Map({ cityLocation, offers, hoverCardIndex }) {
   const mapRef = useRef(null);
-  const [map, setMap] = useState(null);
+  const mapInstance = useRef(null);
   const locations = offers.map((offer) => offer.location);
   const cityLocationCoordinates = Object.values(cityLocation).slice(0, 2);
 
   useEffect(() => {
-    map && map.remove();
-    setMap(null);
-  }, [cityLocation, offers]);
-
-  useEffect(() => {
     const { current: mapContainer } = mapRef;
 
-    if (mapContainer && map === null) {
+    if (mapContainer && mapInstance.current === null) {
       const instance = leaflet.map(mapContainer, {
         center: {
           lat: cityLocation.latitude,
@@ -41,13 +32,53 @@ function Map({ cityLocation, offers }) {
         })
         .addTo(instance);
 
-      instance.setView(cityLocationCoordinates, ZOOM);
+      mapInstance.current = instance;
+    }
 
-      leaflet
-        .marker(cityLocationCoordinates, { icon })
-        .addTo(instance);
+  }, [mapRef, hoverCardIndex, cityLocation]);
+
+  useEffect(() => {
+
+    if (mapInstance.current) {
+      mapInstance.current.setView(cityLocationCoordinates, ZOOM);
 
       locations.forEach((location) => {
+        const icon = leaflet.icon({
+          iconUrl: ICON.iconUrl,
+          iconSize: ICON.iconSize,
+        });
+
+        leaflet
+          .marker({
+            lat: location.latitude,
+            lng: location.longitude,
+          }, { icon })
+          .addTo(mapInstance.current);
+      });
+    }
+
+  }, [cityLocationCoordinates, locations]);
+
+  useEffect(() => {
+    const { current: instance } = mapInstance;
+
+    if (mapInstance.current) {
+      locations.forEach((location, index) => {
+        const isActiveIcon = hoverCardIndex === index;
+        let icon = null;
+
+        if (isActiveIcon) {
+          icon = leaflet.icon({
+            iconUrl: ICON.activeIconUrl,
+            iconSize: ICON.iconSize,
+          });
+        } else {
+          icon = leaflet.icon({
+            iconUrl: ICON.iconUrl,
+            iconSize: ICON.iconSize,
+          });
+        }
+
         leaflet
           .marker({
             lat: location.latitude,
@@ -55,11 +86,9 @@ function Map({ cityLocation, offers }) {
           }, { icon })
           .addTo(instance);
       });
-
-      setMap(instance);
     }
 
-  }, [mapRef, map]);
+  }, [hoverCardIndex, locations]);
 
   return (
     <div ref={mapRef} style={{ height: '100%', width: '100%' }}></div>
@@ -73,6 +102,12 @@ Map.propTypes = {
     longitude: PropTypes.number.isRequired,
     zoom: PropTypes.number.isRequired,
   }).isRequired,
+  hoverCardIndex: PropTypes.number,
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  hoverCardIndex: state.hoverCardIndex,
+});
+
+export { Map };
+export default connect(mapStateToProps, null)(Map);

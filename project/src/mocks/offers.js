@@ -6,8 +6,8 @@ export const offers = [
     'bedrooms': 3,
     'city': {
       'location': {
-        'latitude': 50.935598,
-        'longitude': 6.938392,
+        'latitude': 50.942478605604855,
+        'longitude': 6.961136393687504,
         'zoom': 10,
       },
       'name': 'Cologne',
@@ -25,8 +25,8 @@ export const offers = [
     'is_favorite': true,
     'is_premium': false,
     'location': {
-      'latitude': 52.35514938496378,
-      'longitude': 4.673877537499948,
+      'latitude': 50.954683174221934,
+      'longitude': 6.961321787836798,
       'zoom': 8,
     },
     'max_adults': 4,
@@ -40,8 +40,8 @@ export const offers = [
     'bedrooms': 3,
     'city': {
       'location': {
-        'latitude': 50.935598,
-        'longitude': 6.938392,
+        'latitude': 50.93548691424187,
+        'longitude': 6.97394561195005,
         'zoom': 10,
       },
       'name': 'Cologne',
@@ -59,8 +59,8 @@ export const offers = [
     'is_favorite': true,
     'is_premium': false,
     'location': {
-      'latitude': 52.35514938496378,
-      'longitude': 4.673877537499948,
+      'latitude': 50.93418648219227,
+      'longitude': 6.942021902898058,
       'zoom': 8,
     },
     'max_adults': 4,
@@ -197,6 +197,40 @@ export const offers = [
     'location': {
       'latitude': 52.3909553943508,
       'longitude': 4.929309666406198,
+      'zoom': 8,
+    },
+    'max_adults': 4,
+    'preview_image': 'img/room.jpg',
+    'price': 120,
+    'rating': 4.8,
+    'title': 'Wood and stone place',
+    'type': 'apartment',
+  },
+  {
+    'bedrooms': 3,
+    'city': {
+      'location': {
+        'latitude': 48.860500,
+        'longitude': 2.337094,
+        'zoom': 10,
+      },
+      'name': 'Paris',
+    },
+    'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+    'goods': ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
+    'host': {
+      'avatar_url': 'img/avatar-angelina.jpg',
+      'id': nanoid(),
+      'is_pro': true,
+      'name': 'Angelina',
+    },
+    'id': nanoid(),
+    'images': ['img/room.jpg', 'img/apartment-01.jpg'],
+    'is_favorite': true,
+    'is_premium': false,
+    'location': {
+      'latitude': 48.86675888416285,
+      'longitude': 2.3614886816738645,
       'zoom': 8,
     },
     'max_adults': 4,
