@@ -10,8 +10,9 @@ export const ActionCreator = {
     type: ActionType.CHANGE_CITY,
     payload: city,
   }),
-  getOffers: () => ({
+  getOffers: (offers) => ({
     type: ActionType.GET_OFFERS,
+    payload: offers,
   }),
   getNearbyOffers: () => ({
     type: ActionType.GET_NEARBY_OFFERS,
