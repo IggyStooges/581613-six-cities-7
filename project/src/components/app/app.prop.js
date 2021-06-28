@@ -1,4 +1,4 @@
-import { number, string, bool, shape, arrayOf, oneOf } from 'prop-types';
+import { number, string, bool, shape, arrayOf, oneOf, oneOfType } from 'prop-types';
 import { ApartmentType, CityType } from '../../const';
 
 export const offerProp = shape({
@@ -15,11 +15,17 @@ export const offerProp = shape({
   goods: arrayOf(string).isRequired,
   host: shape({
     avatarUrl: string.isRequired,
-    id: string.isRequired,
+    id: oneOfType([
+      string,
+      number,
+    ]),
     isPro: bool.isRequired,
     name: string.isRequired,
   }).isRequired,
-  id: string.isRequired,
+  id: oneOfType([
+    string,
+    number,
+  ]),
   images: arrayOf(string).isRequired,
   isFavorite: bool.isRequired,
   isPremium: bool.isRequired,

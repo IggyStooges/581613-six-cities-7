@@ -51,7 +51,10 @@ PlaceCard.propTypes = {
   apartmentType: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
   onCardHover: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   index: PropTypes.number,
 };
 

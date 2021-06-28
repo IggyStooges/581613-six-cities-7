@@ -1,17 +1,16 @@
 
 import { ActionType } from './action';
-import { offers, nearbyOffers } from '../mocks/offers';
+import { nearbyOffers } from '../mocks/offers';
 import adaptToClient from '../utils/adaptToClient';
 import { CityType } from '../const';
 
-const adaptOffers = offers.map((offer) => adaptToClient(offer));
-const adaptNearbyOffers = nearbyOffers.map((offer) => adaptToClient(offer));
-
+const adaptOffersList = (offersList) => offersList.map((offer) => adaptToClient(offer));
 const initialState = {
   city: CityType.PARIS,
-  offers: adaptOffers,
-  nearbyOffers: adaptNearbyOffers,
+  offers: [],
+  nearbyOffers: adaptOffersList(nearbyOffers),
   hoverCardIndex: null,
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,6 +24,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         hoverCardIndex: action.payload,
+      };
+    case ActionType.GET_OFFERS:
+      return {
+        ...state,
+        offers: adaptOffersList(action.payload),
+        isDataLoaded: true,
       };
     default:
       return state;

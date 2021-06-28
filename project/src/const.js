@@ -1,6 +1,6 @@
 export const ApartmentType = {
   APARTMENT: 'apartment',
-  ROOM: 'private room',
+  ROOM: 'room',
   HOUSE: 'house',
   HOTEL: 'hotel',
 };
@@ -46,4 +46,8 @@ export const sortOptions = {
   PRICE_TO_HIGH: 'Price: low to high',
   PRICE_TO_LOW: 'Price: high to low',
   TOP_RATED_FIRST: 'Top rated first',
+};
+
+export const APIRoute = {
+  OFFERS: '/hotels',
 };
