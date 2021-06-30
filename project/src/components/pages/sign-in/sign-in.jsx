@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { login } from '../../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../../const';
 import Header from '../../common/header/header';
+import { authorizationStatusPtop } from '../../app/app.prop';
 
 function SignIn({ onSubmit, authorizationStatus}) {
   const loginRef = useRef();
@@ -13,7 +14,9 @@ function SignIn({ onSubmit, authorizationStatus}) {
   const history = useHistory();
 
   useEffect(() => {
-    authorizationStatus === AuthorizationStatus.AUTH && history.push(AppRoute.MAIN);
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      history.push(AppRoute.MAIN);
+    }
   }, [authorizationStatus]);
 
   const handleSubmit = (evt) => {
@@ -60,7 +63,7 @@ function SignIn({ onSubmit, authorizationStatus}) {
 
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.oneOf(Object.values(AuthorizationStatus)).isRequired,
+  authorizationStatus: authorizationStatusPtop.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

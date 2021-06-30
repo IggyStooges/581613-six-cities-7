@@ -4,9 +4,9 @@ import { Link, useHistory } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../../const';
 import { connect } from 'react-redux';
 import { logout } from '../../../store/api-actions';
+import { authorizationStatusPtop} from '../../app/app.prop';
 
-function Header({ onLogout, authorizationStatus, login }) {
-  const { AUTH: AUTH_STATUS } = AuthorizationStatus;
+function Header({ onLogout, authorizationStatus, user }) {
   const { SIGN_IN, MAIN, FAVORITES } = AppRoute;
   const history = useHistory();
 
@@ -27,13 +27,14 @@ function Header({ onLogout, authorizationStatus, login }) {
           <nav className="header__nav">
             <ul className="header__nav-list">
               {
-                authorizationStatus === AUTH_STATUS ? (
+                authorizationStatus === AuthorizationStatus.AUTH ? (
                   <>
                     <li className="header__nav-item user">
                       <Link className="header__nav-link header__nav-link--profile" to={FAVORITES}>
                         <div className="header__avatar-wrapper user__avatar-wrapper">
+                          <img src={user.avatarUrl} alt="" />
                         </div>
-                        <span className="header__user-name user__name">{login}</span>
+                        <span className="header__user-name user__name">{user.login}</span>
                       </Link>
                     </li>
                     <li className="header__nav-item">
@@ -62,13 +63,16 @@ function Header({ onLogout, authorizationStatus, login }) {
 
 Header.propTypes = {
   onLogout: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.oneOf(Object.values(AuthorizationStatus)).isRequired,
-  login: PropTypes.string,
+  authorizationStatus: authorizationStatusPtop.isRequired,
+  user: PropTypes.shape({
+    login: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string.isRequired,
+  }),
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: state.authorizationStatus,
-  login: state.login,
+  user: state.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,5 +1,5 @@
 import { number, string, bool, shape, arrayOf, oneOf, oneOfType } from 'prop-types';
-import { ApartmentType, CityType } from '../../const';
+import { ApartmentType, CityType, AuthorizationStatus } from '../../const';
 
 export const offerProp = shape({
   bedrooms: number.isRequired,
@@ -54,3 +54,5 @@ export const reviewProp = shape({
     name: string.isRequired,
   }),
 }).isRequired;
+
+export const authorizationStatusPtop = oneOf(Object.values(AuthorizationStatus));

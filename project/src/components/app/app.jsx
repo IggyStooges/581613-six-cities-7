@@ -5,9 +5,9 @@ import Favorites from '../pages/favorites/favorites';
 import Room from '../pages/room/room';
 import ErrorPage from '../pages/error-page/error-page';
 import Loader from '../common/loader/loader';
-import { offerProp, reviewProp } from './app.prop';
+import { offerProp, reviewProp, authorizationStatusPtop } from './app.prop';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import groupOffersByCity from '../../utils/sortByCity';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -20,7 +20,7 @@ function App({ offers, reviews, nearbyOffers, isDataLoaded, authorizationStatus 
 
   const sortedFavorites = groupOffersByCity(favorites);
 
-  if (!isDataLoaded || authorizationStatus === AuthorizationStatus.UNKNOWN) {
+  if (!isDataLoaded) {
     return (
       <Loader />
     );
@@ -52,7 +52,7 @@ App.propTypes = {
   nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
   reviews: PropTypes.arrayOf(reviewProp).isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
-  authorizationStatus: PropTypes.oneOf(Object.values(AuthorizationStatus)).isRequired,
+  authorizationStatus: authorizationStatusPtop.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -11,8 +11,11 @@ const initialState = {
   nearbyOffers: adaptOffersList(nearbyOffers),
   hoverCardIndex: null,
   isDataLoaded: false,
-  authorizationStatus: AuthorizationStatus.UNKNOWN,
-  login: '',
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  user: {
+    login: '',
+    avatarUrl: '',
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -38,10 +41,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: action.payload,
       };
-    case ActionType.LOGIN:
+    case ActionType.USER:
       return {
         ...state,
-        login: action.payload,
+        user: action.payload,
       };
     case ActionType.LOGOUT:
       return {

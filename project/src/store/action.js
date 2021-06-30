@@ -5,7 +5,7 @@ export const ActionType = {
   HOVER_CITY_CARD: 'hoverCityCard',
   REQUIRED_AUTHORIZATION: 'requiredAuthorization',
   LOGOUT: 'logout',
-  LOGIN: 'login',
+  USER: 'getUserInfo',
   REDIRECT_TO_ROUTE: 'redirectToRoute',
 };
 
@@ -29,9 +29,9 @@ export const ActionCreator = {
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
   }),
-  login: (login) => ({
-    type: ActionType.LOGIN,
-    payload: login,
+  getUserInfo: (user) => ({
+    type: ActionType.USER,
+    payload: user,
   }),
   logout: () => ({
     type: ActionType.LOGOUT,

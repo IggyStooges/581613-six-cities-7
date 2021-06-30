@@ -14,10 +14,12 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 
 export const login = ({ login: email, password }) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, { email, password })
-    .then(({ data }) => localStorage.setItem('token', data.token))
+    .then(({ data }) => {
+      localStorage.setItem('token', data.token);
+      dispatch(ActionCreator.getUserInfo({email: data.email, avatarUrl: data.avatar_url}));
+    })
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.MAIN)))
-    .then(() => dispatch(ActionCreator.login(email)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
