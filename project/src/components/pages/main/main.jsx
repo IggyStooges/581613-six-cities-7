@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import OffersList from '../../common/offers-list/offers-list';
 import Map from '../../common/map/map';
-import { Link } from 'react-router-dom';
 import getCurrentCityOffers from '../../../getCurrentCityOffers';
-import { AppRoute, CityType, sortOptions } from '../../../const';
+import { CityType, sortOptions } from '../../../const';
 import { offerProp } from '../../app/app.prop';
 import { connect } from 'react-redux';
 import { ActionCreator } from '../../../store/action';
 import CitiesList from './cities-list';
+import Header from '../../common/header/header';
 import SortOptions from './sort-options';
-const { FAVORITES, MAIN } = AppRoute;
 
 function Main({ offers, city = CityType.PARIS, onCityChange }) {
   const { TOP_RATED_FIRST, PRICE_TO_HIGH, PRICE_TO_LOW, POPULAR } = sortOptions;
@@ -41,34 +40,7 @@ function Main({ offers, city = CityType.PARIS, onCityChange }) {
 
   return (
     <div className="page page--gray page--main">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link header__logo-link--active" to={MAIN}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={FAVORITES}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <CitiesList currentCity={city} onCityChange={onCityChange} />

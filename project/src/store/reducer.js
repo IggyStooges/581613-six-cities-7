@@ -2,7 +2,7 @@
 import { ActionType } from './action';
 import { nearbyOffers } from '../mocks/offers';
 import adaptToClient from '../utils/adaptToClient';
-import { CityType } from '../const';
+import { CityType, AuthorizationStatus } from '../const';
 
 const adaptOffersList = (offersList) => offersList.map((offer) => adaptToClient(offer));
 const initialState = {
@@ -11,6 +11,11 @@ const initialState = {
   nearbyOffers: adaptOffersList(nearbyOffers),
   hoverCardIndex: null,
   isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  user: {
+    login: '',
+    avatarUrl: '',
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -30,6 +35,21 @@ const reducer = (state = initialState, action) => {
         ...state,
         offers: adaptOffersList(action.payload),
         isDataLoaded: true,
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case ActionType.USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     default:
       return state;
