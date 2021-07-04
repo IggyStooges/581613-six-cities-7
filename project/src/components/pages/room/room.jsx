@@ -15,7 +15,7 @@ function Room({ currentRoom, comments, nearbyOffers }) {
 
   useEffect(() => {
     store.dispatch(fetchCurrentRoom(id));
-  }, []);
+  }, [id]);
 
   return (
     <div className="page">

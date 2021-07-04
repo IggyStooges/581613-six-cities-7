@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import RatingStars from './rating-stars';
 import { store } from '../../../index';
 import PropTypes from 'prop-types';
 import { postComment } from '../../../store/api-actions';
 
 function CommentForm({ roomId }) {
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-
   const [formState, setFormState] = useState({
     rating: 0,
     comment: '',
@@ -27,10 +25,6 @@ function CommentForm({ roomId }) {
       comment: e.target.value,
     });
   };
-
-  useEffect(() => {
-    setIsButtonDisabled(comment.length < 50 || !rating);
-  }, [comment, rating]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,7 +52,7 @@ function CommentForm({ roomId }) {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={isButtonDisabled}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={comment.length < 50 || !rating}>Submit</button>
       </div>
     </form>
   );

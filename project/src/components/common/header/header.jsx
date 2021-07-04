@@ -9,7 +9,8 @@ import { authorizationStatusProp} from '../../app/app.prop';
 function Header({ onLogout, authorizationStatus, user }) {
   const { MAIN, FAVORITES } = AppRoute;
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault();
     onLogout();
   };
 

@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login } from '../../../store/api-actions';
 import Header from '../../common/header/header';
-import { authorizationStatusProp } from '../../app/app.prop';
 
-function SignIn({ onSubmit, authorizationStatus}) {
+function SignIn({ onSubmit }) {
   const loginRef = useRef();
   const passwordRef = useRef();
 
@@ -52,7 +51,6 @@ function SignIn({ onSubmit, authorizationStatus}) {
 
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  authorizationStatus: authorizationStatusProp.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

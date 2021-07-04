@@ -23,6 +23,10 @@ export const fetchCurrentRoom = (id) => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
+    .then(({ data }) => {
+      localStorage.setItem('token', data.token);
+      dispatch(ActionCreator.getUserInfo({ login: data.email, avatarUrl: data.avatar_url }));
+    })
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => { })
 );
@@ -44,9 +48,17 @@ export const logout = () => (dispatch, _getState, api) => (
 );
 
 export const postComment = ({ comment, rating, id }) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.COMMENTS}/${id}`, { comment, rating })
+  api.post(`${APIRoute.COMMENTS}/${id}`, { comment, rating }, {
+    headers: {
+      'x-token': localStorage.getItem('token'),
+    },
+  })
     .then(() => {
-      api.get(`${APIRoute.COMMENTS}/${id}`)
+      api.get(`${APIRoute.COMMENTS}/${id}`, {
+        headers: {
+          'x-token': localStorage.getItem('token'),
+        },
+      })
         .then(({ data }) => dispatch(ActionCreator.getComments(data)));
     })
 );

@@ -35,7 +35,7 @@ function RoomProperty({ currentRoom, reviews, nearbyOffers, authorizationStatus 
           )}
           <div className="property__name-wrapper">
             <h1 className="property__name">
-              {title && title}
+              {title}
             </h1>
             <button className="property__bookmark-button button" type="button">
               <svg className="property__bookmark-icon" width="31" height="33">
