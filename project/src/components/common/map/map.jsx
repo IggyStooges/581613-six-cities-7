@@ -10,7 +10,7 @@ function Map({ cityLocation, offers, hoverCardIndex }) {
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
   const locations = offers.map((offer) => offer.location);
-  const cityLocationCoordinates = Object.values(cityLocation).slice(0, 2);
+  const cityLocationCoordinates = cityLocation ? Object.values(cityLocation).slice(0, 2) : [0, 0];
 
   useEffect(() => {
     const { current: mapContainer } = mapRef;
@@ -18,10 +18,10 @@ function Map({ cityLocation, offers, hoverCardIndex }) {
     if (mapContainer && mapInstance.current === null) {
       const instance = leaflet.map(mapContainer, {
         center: {
-          lat: cityLocation.latitude,
-          lng: cityLocation.longitude,
+          lat: cityLocation?.latitude,
+          lng: cityLocation?.longitude,
         },
-        zoom: cityLocation.zoom,
+        zoom: cityLocation?.zoom,
         zoomControl: false,
         marker: true,
       });
@@ -50,8 +50,8 @@ function Map({ cityLocation, offers, hoverCardIndex }) {
 
         leaflet
           .marker({
-            lat: location.latitude,
-            lng: location.longitude,
+            lat: location?.latitude,
+            lng: location?.longitude,
           }, { icon })
           .addTo(mapInstance.current);
       });
@@ -81,8 +81,8 @@ function Map({ cityLocation, offers, hoverCardIndex }) {
 
         leaflet
           .marker({
-            lat: location.latitude,
-            lng: location.longitude,
+            lat: location?.latitude,
+            lng: location?.longitude,
           }, { icon })
           .addTo(instance);
       });
@@ -101,7 +101,7 @@ Map.propTypes = {
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
     zoom: PropTypes.number.isRequired,
-  }).isRequired,
+  }),
   hoverCardIndex: PropTypes.number,
 };
 

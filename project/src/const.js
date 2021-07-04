@@ -29,6 +29,7 @@ export const AppRoute = {
   SIGN_IN: '/login',
   FAVORITES: '/favorites',
   ROOM: '/offer/:id',
+  NOT_FOUND: '/404',
 };
 
 export const CITY = [52.38333, 4.9];
@@ -50,6 +51,7 @@ export const sortOptions = {
 
 export const APIRoute = {
   OFFERS: '/hotels',
+  COMMENTS: '/comments',
   LOGIN: '/login',
   LOGOUT: '/logout',
 };

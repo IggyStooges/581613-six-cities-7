@@ -1,18 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../../const';
 import { connect } from 'react-redux';
 import { logout } from '../../../store/api-actions';
-import { authorizationStatusPtop} from '../../app/app.prop';
+import { authorizationStatusProp} from '../../app/app.prop';
 
 function Header({ onLogout, authorizationStatus, user }) {
-  const { SIGN_IN, MAIN, FAVORITES } = AppRoute;
-  const history = useHistory();
+  const { MAIN, FAVORITES } = AppRoute;
 
   const handleLogout = () => {
     onLogout();
-    history.push(SIGN_IN);
   };
 
   return (
@@ -63,7 +61,7 @@ function Header({ onLogout, authorizationStatus, user }) {
 
 Header.propTypes = {
   onLogout: PropTypes.func.isRequired,
-  authorizationStatus: authorizationStatusPtop.isRequired,
+  authorizationStatus: authorizationStatusProp.isRequired,
   user: PropTypes.shape({
     login: PropTypes.string.isRequired,
     avatarUrl: PropTypes.string.isRequired,

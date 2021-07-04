@@ -1,14 +1,15 @@
 
 import { ActionType } from './action';
-import { nearbyOffers } from '../mocks/offers';
 import adaptToClient from '../utils/adaptToClient';
 import { CityType, AuthorizationStatus } from '../const';
 
-const adaptOffersList = (offersList) => offersList.map((offer) => adaptToClient(offer));
+const adaptDataList = (offersList) => offersList.map((offer) => adaptToClient(offer));
 const initialState = {
   city: CityType.PARIS,
   offers: [],
-  nearbyOffers: adaptOffersList(nearbyOffers),
+  nearbyOffers: [],
+  currentRoom: {},
+  comments: [],
   hoverCardIndex: null,
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -33,13 +34,29 @@ const reducer = (state = initialState, action) => {
     case ActionType.GET_OFFERS:
       return {
         ...state,
-        offers: adaptOffersList(action.payload),
+        offers: adaptDataList(action.payload),
         isDataLoaded: true,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
         authorizationStatus: action.payload,
+      };
+    case ActionType.GET_CURRENT_ROOM:
+      return {
+        ...state,
+        currentRoom: adaptToClient(action.payload),
+        isDataLoaded: true,
+      };
+    case ActionType.GET_NEARBY_OFFERS:
+      return {
+        ...state,
+        nearbyOffers: adaptDataList(action.payload),
+      };
+    case ActionType.GET_COMMENTS:
+      return {
+        ...state,
+        comments: adaptDataList(action.payload),
       };
     case ActionType.USER:
       return {

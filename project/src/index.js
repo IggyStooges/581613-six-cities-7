@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import { comments } from './mocks/comments';
-import adaptToClient from './utils/adaptToClient';
 import thunk from 'redux-thunk';
 import { createAPI } from './api';
 import { createStore, applyMiddleware } from 'redux';
@@ -18,9 +16,7 @@ const api = createAPI(
   () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)),
 );
 
-const adaptReviews = comments.map((comment) => adaptToClient(comment));
-
-const store = createStore(
+export const store = createStore(
   reducer,
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
@@ -34,7 +30,7 @@ store.dispatch(fetchOffers());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App reviews={adaptReviews} />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
