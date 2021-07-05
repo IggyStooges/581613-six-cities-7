@@ -1,8 +1,10 @@
 export const ActionType = {
+  HOVER_CITY_CARD: 'hoverCityCard',
   CHANGE_CITY: 'changeCity',
   GET_OFFERS: 'getOffers',
+  GET_CURRENT_ROOM: 'getCurrentRoom',
   GET_NEARBY_OFFERS: 'getNearbyOffers',
-  HOVER_CITY_CARD: 'hoverCityCard',
+  GET_COMMENTS: 'getComments',
   REQUIRED_AUTHORIZATION: 'requiredAuthorization',
   LOGOUT: 'logout',
   USER: 'getUserInfo',
@@ -18,9 +20,6 @@ export const ActionCreator = {
     type: ActionType.GET_OFFERS,
     payload: offers,
   }),
-  getNearbyOffers: () => ({
-    type: ActionType.GET_NEARBY_OFFERS,
-  }),
   hoverCityCard: (hoverCardIndex) => ({
     type: ActionType.HOVER_CITY_CARD,
     payload: hoverCardIndex,
@@ -32,6 +31,18 @@ export const ActionCreator = {
   getUserInfo: (user) => ({
     type: ActionType.USER,
     payload: user,
+  }),
+  getCurrentRoom: (room) => ({
+    type: ActionType.GET_CURRENT_ROOM,
+    payload: room,
+  }),
+  getNearbyOffers: (offers) => ({
+    type: ActionType.GET_NEARBY_OFFERS,
+    payload: offers,
+  }),
+  getComments: (comments) => ({
+    type: ActionType.GET_COMMENTS,
+    payload: comments,
   }),
   logout: () => ({
     type: ActionType.LOGOUT,

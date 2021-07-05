@@ -1,23 +1,12 @@
-import React, { useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login } from '../../../store/api-actions';
-import { AppRoute, AuthorizationStatus } from '../../../const';
 import Header from '../../common/header/header';
-import { authorizationStatusPtop } from '../../app/app.prop';
 
-function SignIn({ onSubmit, authorizationStatus}) {
+function SignIn({ onSubmit }) {
   const loginRef = useRef();
   const passwordRef = useRef();
-
-  const history = useHistory();
-
-  useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.AUTH) {
-      history.push(AppRoute.MAIN);
-    }
-  }, [authorizationStatus]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -26,7 +15,6 @@ function SignIn({ onSubmit, authorizationStatus}) {
       login: loginRef.current.value,
       password: passwordRef.current.value,
     });
-
   };
 
   return (
@@ -63,7 +51,6 @@ function SignIn({ onSubmit, authorizationStatus}) {
 
 SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  authorizationStatus: authorizationStatusPtop.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

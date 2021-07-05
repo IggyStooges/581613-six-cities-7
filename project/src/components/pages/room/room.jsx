@@ -1,53 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { AppRoute, OffersListType } from '../../../const';
+import React, { useEffect } from 'react';
+import { OffersListType } from '../../../const';
 import PropTypes from 'prop-types';
-import {offerProp, reviewProp} from '../../app/app.prop';
+import { offerProp, reviewProp } from '../../app/app.prop';
 import OffersList from '../../common/offers-list/offers-list';
 import { useParams } from 'react-router-dom';
 import RoomProperty from './room-property';
+import Header from '../../common/header/header';
+import { fetchCurrentRoom } from '../../../store/api-actions';
+import { store } from '../../../index';
+import { connect } from 'react-redux';
 
-const { FAVORITES, MAIN } = AppRoute;
-
-function Room({ offers, reviews, nearbyOffers }) {
+function Room({ currentRoom, comments, nearbyOffers }) {
   const { id } = useParams();
 
-  const currentRoom = offers.find((offer) => offer.id === id) || nearbyOffers.find((offer) => offer.id === id);
+  useEffect(() => {
+    store.dispatch(fetchCurrentRoom(id));
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, [id]);
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link header__logo-link--active" to={MAIN}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={FAVORITES}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--property">
         <RoomProperty
           currentRoom={currentRoom}
-          reviews={reviews}
+          reviews={comments}
           nearbyOffers={nearbyOffers}
         />
         <div className="container">
@@ -62,9 +40,16 @@ function Room({ offers, reviews, nearbyOffers }) {
 }
 
 Room.propTypes = {
-  offers: PropTypes.arrayOf(offerProp).isRequired,
-  reviews: PropTypes.arrayOf(reviewProp).isRequired,
+  currentRoom: offerProp,
+  comments: PropTypes.arrayOf(reviewProp).isRequired,
   nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
 };
 
-export default Room;
+const mapStateToProps = (state) => ({
+  nearbyOffers: state.nearbyOffers,
+  currentRoom: state.currentRoom,
+  comments: state.comments,
+});
+
+export { Room };
+export default connect(mapStateToProps, null)(Room);

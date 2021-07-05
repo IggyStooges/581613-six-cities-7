@@ -32,6 +32,6 @@ function Review({ review }) {
   );
 }
 
-Review.propTypes = reviewProp;
+Review.propTypes = reviewProp.isRequired;
 
 export default Review;

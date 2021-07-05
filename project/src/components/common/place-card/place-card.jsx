@@ -5,6 +5,8 @@ import { ActionCreator } from '../../../store/action';
 import { connect } from 'react-redux';
 
 function PlaceCard({ price, previewImage, title, apartmentType, rating, onCardHover, id, index }) {
+  const getOfferPath = (roomId) => `/offer/${roomId}`;
+
   return (
     <article
       className="cities__place-card place-card"
@@ -12,7 +14,7 @@ function PlaceCard({ price, previewImage, title, apartmentType, rating, onCardHo
       onMouseLeave={() => onCardHover(null)}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${id}`}>
+        <Link to={getOfferPath(id)}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
         </Link>
       </div>
@@ -36,7 +38,7 @@ function PlaceCard({ price, previewImage, title, apartmentType, rating, onCardHo
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{title}</Link>
+          <Link to={getOfferPath(id)}>{title}</Link>
         </h2>
         <p className="place-card__type">{apartmentType}</p>
       </div>

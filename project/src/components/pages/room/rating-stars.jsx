@@ -15,7 +15,7 @@ function RatingStars({ onChange, rating }) {
             value={`${mark}`}
             id={`${mark}-stars`}
             type="radio"
-            checked={rating === `${mark}`}
+            checked={rating === mark}
             onChange={onChange}
           />
           <label htmlFor={`${mark}-stars`} className="reviews__rating-label form__rating-label" title="good">
@@ -31,7 +31,7 @@ function RatingStars({ onChange, rating }) {
 
 RatingStars.propTypes = {
   onChange: PropTypes.func.isRequired,
-  rating: PropTypes.string.isRequired,
+  rating: PropTypes.number,
 };
 
 
