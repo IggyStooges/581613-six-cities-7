@@ -34,6 +34,11 @@ function CommentForm({ roomId }) {
       comment: comment,
       rating: rating,
     }));
+
+    setFormState({
+      rating: 0,
+      comment: '',
+    });
   };
 
   return (

@@ -15,6 +15,7 @@ function Room({ currentRoom, comments, nearbyOffers }) {
 
   useEffect(() => {
     store.dispatch(fetchCurrentRoom(id));
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [id]);
 
   return (
