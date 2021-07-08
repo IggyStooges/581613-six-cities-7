@@ -144,8 +144,8 @@ RoomProperty.propTypes = {
   authorizationStatus: authorizationStatusProp,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
+const mapStateToProps = ({USER}) => ({
+  authorizationStatus: USER.authorizationStatus,
 });
 
 export { RoomProperty };
