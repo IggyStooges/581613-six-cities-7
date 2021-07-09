@@ -7,6 +7,7 @@ import Map from '../../common/map/map';
 import { AuthorizationStatus } from '../../../const';
 import { connect } from 'react-redux';
 import { authorizationStatusProp } from '../../app/app.prop';
+import {getAuthorizationStatus} from '../../../store/user/selectors';
 
 function RoomProperty({ currentRoom, reviews, nearbyOffers, authorizationStatus }) {
   const { id, images, title, description, isPremium, apartmentType, rating, bedrooms, maxAdults, price, goods, host, city } = currentRoom;
@@ -144,8 +145,8 @@ RoomProperty.propTypes = {
   authorizationStatus: authorizationStatusProp,
 };
 
-const mapStateToProps = ({USER}) => ({
-  authorizationStatus: USER.authorizationStatus,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 export { RoomProperty };
