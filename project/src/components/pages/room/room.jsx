@@ -9,6 +9,7 @@ import Header from '../../common/header/header';
 import { fetchCurrentRoom } from '../../../store/api-actions';
 import { store } from '../../../index';
 import { connect } from 'react-redux';
+import {getNearbyOffers,getCurrentRoom,getComments} from '../../../store/room/selectors';
 
 function Room({ currentRoom, comments, nearbyOffers }) {
   const { id } = useParams();
@@ -46,9 +47,9 @@ Room.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  nearbyOffers: state.nearbyOffers,
-  currentRoom: state.currentRoom,
-  comments: state.comments,
+  nearbyOffers: getNearbyOffers(state),
+  currentRoom: getCurrentRoom(state),
+  comments: getComments(state),
 });
 
 export { Room };

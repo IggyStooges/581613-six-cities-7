@@ -11,4 +11,7 @@ const adaptToClient = (obj) => {
   return newObj;
 };
 
+export const adaptDataList = (dataList) => dataList.map((item) => adaptToClient(item));
+
+
 export default adaptToClient;

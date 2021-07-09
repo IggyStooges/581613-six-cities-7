@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { ActionCreator } from '../../../store/action';
+import { hoverCityCard } from '../../../store/action';
 import { connect } from 'react-redux';
 
 function PlaceCard({ price, previewImage, title, apartmentType, rating, onCardHover, id, index }) {
@@ -62,7 +62,7 @@ PlaceCard.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   onCardHover(index) {
-    dispatch(ActionCreator.hoverCityCard(index));
+    dispatch(hoverCityCard(index));
   },
 });
 

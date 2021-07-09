@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { offerProp } from '../../app/app.prop';
 import { ZOOM, ICON } from '../../../const';
+import {getHoverCardIndex} from '../../../store/offers/selectors';
 import 'leaflet/dist/leaflet.css';
 
 function Map({ cityLocation, offers, hoverCardIndex }) {
@@ -106,7 +107,7 @@ Map.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  hoverCardIndex: state.hoverCardIndex,
+  hoverCardIndex: getHoverCardIndex(state),
 });
 
 export { Map };

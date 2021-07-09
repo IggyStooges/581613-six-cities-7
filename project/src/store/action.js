@@ -11,44 +11,51 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: 'redirectToRoute',
 };
 
-export const ActionCreator = {
-  changeCity: (city) => ({
-    type: ActionType.CHANGE_CITY,
-    payload: city,
-  }),
-  getOffers: (offers) => ({
-    type: ActionType.GET_OFFERS,
-    payload: offers,
-  }),
-  hoverCityCard: (hoverCardIndex) => ({
-    type: ActionType.HOVER_CITY_CARD,
-    payload: hoverCardIndex,
-  }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
-  getUserInfo: (user) => ({
-    type: ActionType.USER,
-    payload: user,
-  }),
-  getCurrentRoom: (room) => ({
-    type: ActionType.GET_CURRENT_ROOM,
-    payload: room,
-  }),
-  getNearbyOffers: (offers) => ({
-    type: ActionType.GET_NEARBY_OFFERS,
-    payload: offers,
-  }),
-  getComments: (comments) => ({
-    type: ActionType.GET_COMMENTS,
-    payload: comments,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
-};
+export const changeCity = (city) => ({
+  type: ActionType.CHANGE_CITY,
+  payload: city,
+});
+
+export const getOffers = (offers) => ({
+  type: ActionType.GET_OFFERS,
+  payload: offers,
+});
+
+export const hoverCityCard = (hoverCardIndex) => ({
+  type: ActionType.HOVER_CITY_CARD,
+  payload: hoverCardIndex,
+});
+
+export const requireAuthorization = (status) => ({
+  type: ActionType.REQUIRED_AUTHORIZATION,
+  payload: status,
+});
+
+export const getUserInfo = (user) => ({
+  type: ActionType.USER,
+  payload: user,
+});
+
+export const getCurrentRoom = (room) => ({
+  type: ActionType.GET_CURRENT_ROOM,
+  payload: room,
+});
+
+export const getNearbyOffers = (offers) => ({
+  type: ActionType.GET_NEARBY_OFFERS,
+  payload: offers,
+});
+
+export const getComments = (comments) => ({
+  type: ActionType.GET_COMMENTS,
+  payload: comments,
+});
+
+export const logout = () => ({
+  type: ActionType.LOGOUT,
+});
+
+export const redirectToRoute = (url) => ({
+  type: ActionType.REDIRECT_TO_ROUTE,
+  payload: url,
+});

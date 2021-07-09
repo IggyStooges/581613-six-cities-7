@@ -6,10 +6,11 @@ import getCurrentCityOffers from '../../../getCurrentCityOffers';
 import { CityType, sortOptions } from '../../../const';
 import { offerProp } from '../../app/app.prop';
 import { connect } from 'react-redux';
-import { ActionCreator } from '../../../store/action';
+import { changeCity } from '../../../store/action';
 import CitiesList from './cities-list';
 import Header from '../../common/header/header';
 import SortOptions from './sort-options';
+import {getCurrentCity} from '../../../store/offers/selectors';
 
 function Main({ offers, city = CityType.PARIS, onCityChange }) {
   const { TOP_RATED_FIRST, PRICE_TO_HIGH, PRICE_TO_LOW, POPULAR } = sortOptions;
@@ -74,12 +75,12 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  city: state.city,
+  city: getCurrentCity(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCityChange(city) {
-    dispatch(ActionCreator.changeCity(city));
+    dispatch(changeCity(city));
   },
 });
 

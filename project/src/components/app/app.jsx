@@ -13,6 +13,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../../browser-history';
+import { getOffers, getLoadedStatus } from '../../store/offers/selectors';
+import { getAuthorizationStatus } from '../../store/user/selectors';
+import { getCurrentRoom, getNearbyOffers, getComments } from '../../store/room/selectors';
 
 function App({ offers, isDataLoaded, authorizationStatus }) {
   const { MAIN, SIGN_IN, FAVORITES, ROOM } = AppRoute;
@@ -54,12 +57,12 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
-  nearbyOffers: state.nearbyOffers,
-  currentRoom: state.currentRoom,
-  comments: state.comments,
-  isDataLoaded: state.isDataLoaded,
-  authorizationStatus: state.authorizationStatus,
+  offers: getOffers(state),
+  nearbyOffers: getNearbyOffers(state),
+  currentRoom: getCurrentRoom(state),
+  comments: getComments(state),
+  isDataLoaded: getLoadedStatus(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 export { App };
