@@ -54,6 +54,7 @@ export const APIRoute = {
   COMMENTS: '/comments',
   LOGIN: '/login',
   LOGOUT: '/logout',
+  FAVORITES: '/favorite',
 };
 
 export const AuthorizationStatus = {

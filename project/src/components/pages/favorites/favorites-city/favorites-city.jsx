@@ -2,7 +2,7 @@ import React from 'react';
 import PlaceCard from '../favorites-place-card/favorites-place-card';
 import favoritesCityProp from './favorites-city.prop';
 
-function FavoritesCity({ city, offers }) {
+function FavoritesCity({ city, offers = [] }) {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">

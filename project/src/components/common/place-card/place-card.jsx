@@ -3,12 +3,26 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { hoverCityCard } from '../../../store/action';
 import { connect } from 'react-redux';
+import { store } from '../../../index';
+import { markFavorite } from '../../../store/api-actions';
+import {AppRoute, AuthorizationStatus} from '../../../const';
+import {getAuthorizationStatus} from '../../../store/user/selectors';
+import { authorizationStatusProp } from '../../app/app.prop';
+import {useHistory} from 'react-router-dom';
 
-function PlaceCard({ price, previewImage, title, apartmentType, rating, onCardHover, id, index, isFavorite }) {
+function PlaceCard({ price, previewImage, title, apartmentType, rating, onCardHover, id, index, isFavorite, authorizationStatus }) {
   const getOfferPath = (roomId) => `/offer/${roomId}`;
+  const history = useHistory();
 
   const handleFavoriteClick = () => {
-    console.log(id);
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      store.dispatch(markFavorite({
+        id: id,
+        status: isFavorite ? 0 : 1,
+      }));
+    } else {
+      history.push(AppRoute.SIGN_IN);
+    }
   };
 
   return (
@@ -67,6 +81,7 @@ PlaceCard.propTypes = {
   ]),
   index: PropTypes.number,
   isFavorite: PropTypes.bool,
+  authorizationStatus: authorizationStatusProp.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -75,5 +90,10 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+});
+
+
 export { PlaceCard };
-export default connect(null, mapDispatchToProps)(PlaceCard);
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceCard);

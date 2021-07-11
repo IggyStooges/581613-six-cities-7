@@ -1,4 +1,4 @@
-import { getComments, getOffers, getCurrentRoom, requireAuthorization, getUserInfo, redirectToRoute, getNearbyOffers } from './action';
+import { getComments, getOffers, getCurrentRoom, requireAuthorization, getUserInfo, redirectToRoute, getNearbyOffers, getFavoritesOffers, userLogout } from './action';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
@@ -44,7 +44,7 @@ export const login = ({ login: email, password }) => (dispatch, _getState, api) 
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.LOGOUT)
     .then(() => localStorage.removeItem('token'))
-    .then(() => dispatch(logout()))
+    .then(() => dispatch(userLogout()))
 );
 
 export const postComment = ({ comment, rating, id }) => (dispatch, _getState, api) => (
@@ -60,5 +60,26 @@ export const postComment = ({ comment, rating, id }) => (dispatch, _getState, ap
         },
       })
         .then(({ data }) => dispatch(getComments(data)));
+    })
+);
+
+export const fetchfFavoritesOffers = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.FAVORITES)
+    .then(({ data }) => dispatch(getFavoritesOffers(data)))
+);
+
+export const markFavorite = ({ id, status }) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.FAVORITES}/${id}/${status}`, {}, {
+    headers: {
+      'x-token': localStorage.getItem('token'),
+    },
+  })
+    .then(() => {
+      api.get(APIRoute.OFFERS, {
+        headers: {
+          'x-token': localStorage.getItem('token'),
+        },
+      })
+        .then(({ data }) => dispatch(getOffers(data)));
     })
 );
