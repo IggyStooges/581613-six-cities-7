@@ -8,12 +8,22 @@ import { AuthorizationStatus } from '../../../const';
 import { connect } from 'react-redux';
 import { authorizationStatusProp } from '../../app/app.prop';
 import {getAuthorizationStatus} from '../../../store/user/selectors';
+import { store } from '../../../index';
+import { markFavorite } from '../../../store/api-actions';
 
 function RoomProperty({ currentRoom, reviews, nearbyOffers, authorizationStatus }) {
-  const { id, images, title, description, isPremium, apartmentType, rating, bedrooms, maxAdults, price, goods, host, city } = currentRoom;
+  const { id, images, title, description, isPremium, apartmentType, rating, bedrooms, maxAdults, price, goods, host, city, isFavorite } = currentRoom;
   const name = host?.name;
   const isPro = host?.isPro;
   const avatarUrl = host?.avatarUrl;
+
+
+  const handleFavoriteClick = () => {
+    store.dispatch(markFavorite({
+      id: id,
+      status: isFavorite ? 0 : 1,
+    }));
+  };
 
   return (
     <section className="property">
@@ -38,7 +48,7 @@ function RoomProperty({ currentRoom, reviews, nearbyOffers, authorizationStatus 
             <h1 className="property__name">
               {title}
             </h1>
-            <button className="property__bookmark-button button" type="button">
+            <button className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`} type="button" onClick={handleFavoriteClick}>
               <svg className="property__bookmark-icon" width="31" height="33">
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>

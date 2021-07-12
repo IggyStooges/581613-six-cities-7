@@ -10,7 +10,7 @@ export const ActionType = {
   USER: 'getUserInfo',
   REDIRECT_TO_ROUTE: 'redirectToRoute',
   GET_FAVORITES_OFFERS: 'getFavoritesOffers',
-  UPDATE_OFFERS_AFTER_MARK: 'updateOffersAfterMark',
+  MARK_FAVORITE_OFFER: 'markFavoriteOffer',
 };
 
 export const changeCity = (city) => ({
@@ -65,4 +65,8 @@ export const redirectToRoute = (url) => ({
 export const getFavoritesOffers = (favoritesOffers) => ({
   type: ActionType.GET_FAVORITES_OFFERS,
   payload: favoritesOffers,
+});
+
+export const markFavoriteOffer = () => ({
+  type: ActionType.MARK_FAVORITE_OFFER,
 });

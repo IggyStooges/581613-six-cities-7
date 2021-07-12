@@ -10,7 +10,7 @@ import { fetchOffers, checkAuth } from './store/api-actions';
 import rootReducer from './store/root-reducer';
 import { requireAuthorization } from './store/action';
 import { AuthorizationStatus } from './const';
-import { redirect } from './store/middlewares/redirect';
+import { redirect, redirectToLogin } from './store/middlewares/redirect';
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
@@ -21,6 +21,7 @@ export const store = createStore(
   composeWithDevTools(
     applyMiddleware(thunk.withExtraArgument(api)),
     applyMiddleware(redirect),
+    applyMiddleware(redirectToLogin),
   ),
 );
 
