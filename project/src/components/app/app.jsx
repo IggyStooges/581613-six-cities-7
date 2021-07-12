@@ -8,7 +8,6 @@ import Loader from '../common/loader/loader';
 import { offerProp, authorizationStatusProp } from './app.prop';
 import { Router as BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import groupOffersByCity from '../../utils/sortByCity';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import PrivateRoute from '../private-route/private-route';
@@ -19,9 +18,6 @@ import { getCurrentRoom, getNearbyOffers, getComments } from '../../store/room/s
 
 function App({ offers, isDataLoaded, authorizationStatus }) {
   const { MAIN, SIGN_IN, FAVORITES, ROOM } = AppRoute;
-  const favorites = offers.filter(({ isFavorite }) => isFavorite);
-
-  const sortedFavorites = groupOffersByCity(favorites);
 
   if (!isDataLoaded) {
     return (
@@ -38,7 +34,7 @@ function App({ offers, isDataLoaded, authorizationStatus }) {
         <Route exact path={SIGN_IN}>
           <SignIn authorizationStatus={authorizationStatus} />
         </Route>
-        <PrivateRoute exact path={FAVORITES} render={() => <Favorites favorites={sortedFavorites} />} />
+        <PrivateRoute exact path={FAVORITES} render={() => <Favorites />} />
         <Route exact path={ROOM}>
           <Room />
         </Route>

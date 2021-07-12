@@ -9,7 +9,7 @@ function OffersList({ offers, type = OffersListType.MAIN }) {
 
   return (
     <div className={`places__list tabs__content ${currentClassName}`}>
-      {offers.map(({ price, previewImage, title, type: offerType, rating, location, id }, index) => (
+      {offers.map(({ price, previewImage, title, type: offerType, rating, location, id, isFavorite }, index) => (
         <PlaceCard
           key={id}
           rating={rating}
@@ -20,6 +20,7 @@ function OffersList({ offers, type = OffersListType.MAIN }) {
           location={location}
           id={id}
           index={index}
+          isFavorite={isFavorite}
         />
       ))}
     </div>

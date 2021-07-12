@@ -1,62 +1,65 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import FavoritesCity from './favorites-city/favorites-city';
 import PropTypes from 'prop-types';
 import favoritesCityProp from './favorites-city/favorites-city.prop';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../../const';
+import { fetchfFavoritesOffers } from '../../../store/api-actions';
+import Header from '../../common/header/header';
+import { store } from '../../../index';
+import { getFavoritesOffers } from '../../../store/favorites/selectors';
+import { connect } from 'react-redux';
 
-const { FAVORITES, MAIN } = AppRoute;
+function Favorites({ favoritesOffers = {} }) {
+  useEffect(() => {
+    store.dispatch(fetchfFavoritesOffers());
+  }, []);
 
-function Favorites({ favorites }) {
+  const isFavoritelList = !!Object.keys(favoritesOffers).length;
+
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link header__logo-link--active" to={MAIN}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
+      <Header />
+      {
+        isFavoritelList ? (
+          <main className="page__main page__main--favorites">
+            <div className="page__favorites-container container">
+              <section className="favorites">
+                <h1 className="favorites__title">Saved listing</h1>
+                <ul className="favorites__list">
+                  {Object.keys(favoritesOffers).map(( city ) => (
+                    <FavoritesCity
+                      key={city}
+                      city={city}
+                      offers={favoritesOffers[city].offers}
+                    />
+                  ))}
+                </ul>
+              </section>
             </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={FAVORITES}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-      <main className="page__main page__main--favorites">
-        <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {Object.entries(favorites).map((favorite) => (
-                <FavoritesCity
-                  key={favorite[0]}
-                  city={favorite[0]}
-                  offers={favorite[1].offers}
-                />
-              ))}
-            </ul>
-          </section>
-        </div>
-      </main>
+          </main>
+        ) : (
+          <main className="page__main page__main--favorites page__main--favorites-empty">
+            <div className="page__favorites-container container">
+              <section className="favorites favorites--empty">
+                <h1 className="visually-hidden">Favorites (empty)</h1>
+                <div className="favorites__status-wrapper">
+                  <b className="favorites__status">Nothing yet saved.</b>
+                  <p className="favorites__status-description">Save properties to narrow down search or plan your future trips.</p>
+                </div>
+              </section>
+            </div>
+          </main>
+        )
+      }
     </div>
   );
 }
 
 Favorites.propTypes = PropTypes.arrayOf(favoritesCityProp).isRequired;
 
-export default Favorites;
+const mapStateToProps = (state) => ({
+  favoritesOffers: getFavoritesOffers(state),
+});
+
+export { Favorites };
+export default connect(mapStateToProps, null)(Favorites);
+

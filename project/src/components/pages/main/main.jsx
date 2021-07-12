@@ -9,14 +9,17 @@ import { connect } from 'react-redux';
 import { changeCity } from '../../../store/action';
 import CitiesList from './cities-list';
 import Header from '../../common/header/header';
+import MainEmpty from './main-empty';
 import SortOptions from './sort-options';
-import {getCurrentCity} from '../../../store/offers/selectors';
+import { getCurrentCity } from '../../../store/offers/selectors';
 
 function Main({ offers, city = CityType.PARIS, onCityChange }) {
   const { TOP_RATED_FIRST, PRICE_TO_HIGH, PRICE_TO_LOW, POPULAR } = sortOptions;
 
   const [currentSortOption, setCurrentSortOption] = useState(POPULAR);
-  const currentCityData = getCurrentCityOffers(offers, city) ? getCurrentCityOffers(offers, city) : undefined;
+  const currentCityData = getCurrentCityOffers(offers, city)
+    ? getCurrentCityOffers(offers, city)
+    : undefined;
 
   const sortOffers = (sortOption) => {
     const currentCityOffers = currentCityData ? currentCityData.offers : [];
@@ -40,28 +43,37 @@ function Main({ offers, city = CityType.PARIS, onCityChange }) {
   const handleSortOptionClick = (option) => setCurrentSortOption(option);
 
   return (
-    <div className="page page--gray page--main">
+    <div className='page page--gray page--main'>
       <Header />
-      <main className="page__main page__main--index">
-        <h1 className="visually-hidden">Cities</h1>
+      <main className='page__main page__main--index'>
+        <h1 className='visually-hidden'>Cities</h1>
         <CitiesList currentCity={city} onCityChange={onCityChange} />
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{sortedOffers.length} places to stay in {city}</b>
-              <SortOptions
-                onSortOptionChange={handleSortOptionClick}
-                currentSortOption={currentSortOption}
-              />
-              <OffersList offers={sortedOffers} />
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map">
-                {currentCityData && <Map offers={sortedOffers} cityLocation={currentCityData.location} />}
+        <div className='cities'>
+          {sortedOffers.length ? (
+            <div className='cities__places-container container'>
+              <section className='cities__places places'>
+                <h2 className='visually-hidden'>Places</h2>
+                <b className='places__found'>
+                  {sortedOffers.length} places to stay in {city}
+                </b>
+                <SortOptions
+                  onSortOptionChange={handleSortOptionClick}
+                  currentSortOption={currentSortOption}
+                />
+                <OffersList offers={sortedOffers} />
               </section>
+              <div className='cities__right-section'>
+                <section className='cities__map map'>
+                  {currentCityData && (
+                    <Map
+                      offers={sortedOffers}
+                      cityLocation={currentCityData.location}
+                    />
+                  )}
+                </section>
+              </div>
             </div>
-          </div>
+          ) : <MainEmpty />}
         </div>
       </main>
     </div>

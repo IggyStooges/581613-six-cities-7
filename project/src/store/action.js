@@ -9,6 +9,8 @@ export const ActionType = {
   LOGOUT: 'logout',
   USER: 'getUserInfo',
   REDIRECT_TO_ROUTE: 'redirectToRoute',
+  GET_FAVORITES_OFFERS: 'getFavoritesOffers',
+  MARK_FAVORITE_OFFER: 'markFavoriteOffer',
 };
 
 export const changeCity = (city) => ({
@@ -51,11 +53,20 @@ export const getComments = (comments) => ({
   payload: comments,
 });
 
-export const logout = () => ({
+export const userLogout = () => ({
   type: ActionType.LOGOUT,
 });
 
 export const redirectToRoute = (url) => ({
   type: ActionType.REDIRECT_TO_ROUTE,
   payload: url,
+});
+
+export const getFavoritesOffers = (favoritesOffers) => ({
+  type: ActionType.GET_FAVORITES_OFFERS,
+  payload: favoritesOffers,
+});
+
+export const markFavoriteOffer = () => ({
+  type: ActionType.MARK_FAVORITE_OFFER,
 });
