@@ -14,7 +14,6 @@ const room = (state = initialState, action) => {
       return {
         ...state,
         currentRoom: adaptToClient(action.payload),
-        isDataLoaded: true,
       };
     case ActionType.GET_NEARBY_OFFERS:
       return {

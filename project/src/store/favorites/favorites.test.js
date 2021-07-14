@@ -7,7 +7,7 @@ const initialState = {
   favoritesList: [],
 };
 
-describe("Reducer: user", () => {
+describe("Reducer: favorites", () => {
   it("without action should return initial state", () => {
     expect(favorites(initialState, {})).toEqual(initialState);
   });

@@ -21,11 +21,10 @@ describe("Reducer: user", () => {
       payload: AuthorizationStatus.AUTH,
     };
 
-
     expect(user(initialState, authorizationAction)).toEqual({...initialState, authorizationStatus: authorizationAction.payload});
   });
 
-  it("action login should return updated state", () => {
+  it("action user should return updated state", () => {
     const userAction = {
       type: ActionType.USER,
       payload: {
@@ -34,11 +33,10 @@ describe("Reducer: user", () => {
       },
     };
 
-
     expect(user(initialState, userAction)).toEqual({...initialState, user: userAction.payload});
   });
 
-  it("action login should return updated state", () => {
+  it("action logout should return updated state", () => {
     const logoutAction = {
       type: ActionType.LOGOUT,
     };

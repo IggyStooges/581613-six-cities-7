@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
-
 const { FAVORITES, MAIN } = AppRoute;
 
 function ErrorPage() {
