@@ -5,6 +5,8 @@ import { createMemoryHistory } from "history";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { AuthorizationStatus, AppRoute } from "../../const";
+import thunk from 'redux-thunk';
+import { createAPI } from '../../api';
 import App from "./app";
 
 let history = null;
@@ -16,7 +18,9 @@ describe("Application Routing", () => {
   beforeAll(() => {
     history = createMemoryHistory();
 
-    createFakeStore = configureStore({});
+    createFakeStore = configureStore([thunk.withExtraArgument(createAPI(() => {}))]);
+
+    window.scrollTo = () => {};
     store = createFakeStore({
       OFFERS: { offers: [], isDataLoaded: true },
       CITIES: { city: "Paris" },
@@ -57,7 +61,7 @@ describe("Application Routing", () => {
     history.push('/offer/55');
     render(fakeApp);
 
-    expect(screen.getByText(/Other places in the neighbourhood!/i)).toBeInTheDocument();
+    expect(screen.getByText(/Other places in the neighbourhood/i)).toBeInTheDocument();
   });
 
   it('should render "Favorites" when user navigate to "/favorites" without authorization', () => {
@@ -97,7 +101,8 @@ describe("Application Routing", () => {
     history.push(AppRoute.FAVORITES);
     render(fakeApp);
 
-    expect(screen.getByText("Saved listing")).toBeInTheDocument();
+    expect(screen.getByText("Nothing yet saved.")).toBeInTheDocument();
+    expect(screen.getByText("Save properties to narrow down search or plan your future trips.")).toBeInTheDocument();
   });
 
   it('should render "ErrorPage" when user navigate to non-existent route', () => {
