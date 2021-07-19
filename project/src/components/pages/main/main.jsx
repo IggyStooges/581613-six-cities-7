@@ -82,7 +82,7 @@ function Main({ offers, city = CityType.PARIS, onCityChange }) {
 
 Main.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
-  city: PropTypes.oneOf(Object.values(CityType)).isRequired,
+  city: PropTypes.oneOf(Object.values(CityType)),
   onCityChange: PropTypes.func.isRequired,
 };
 

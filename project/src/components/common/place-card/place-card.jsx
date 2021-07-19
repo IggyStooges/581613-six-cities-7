@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { hoverCityCard } from '../../../store/action';
-import { connect } from 'react-redux';
-import { store } from '../../../index';
+import { connect, useDispatch } from 'react-redux';
 import { markFavorite } from '../../../store/api-actions';
 
 function PlaceCard({ price, previewImage, title, apartmentType, rating, onCardHover, id, index, isFavorite }) {
+  const dispatch = useDispatch();
   const getOfferPath = (roomId) => `/offer/${roomId}`;
 
   const handleFavoriteClick = () => {
-    store.dispatch(markFavorite({
+    dispatch(markFavorite({
       id: id,
       status: isFavorite ? 0 : 1,
     }));
@@ -47,7 +47,7 @@ function PlaceCard({ price, previewImage, title, apartmentType, rating, onCardHo
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{ width: `${(rating / 5) * 100}%` }}></span>
-            <span className="visually-hidden">Rating</span>
+            <span className="visually-hidden">{rating}</span>
           </div>
         </div>
         <h2 className="place-card__name">
