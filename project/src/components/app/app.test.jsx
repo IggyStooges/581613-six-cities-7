@@ -53,12 +53,51 @@ describe("Application Routing", () => {
     expect(screen.getAllByText(/Sign in/i)[2]).toBeInTheDocument();
   });
 
+  it('should render "Room" when user navigate to "/offer/:id"', () => {
+    history.push('/offer/55');
+    render(fakeApp);
+
+    expect(screen.getByText(/Other places in the neighbourhood!/i)).toBeInTheDocument();
+  });
+
   it('should render "Favorites" when user navigate to "/favorites" without authorization', () => {
     history.push(AppRoute.FAVORITES);
     render(fakeApp);
 
     expect(screen.queryByText(/Saved listing/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Save properties to narrow down search or plan your future trips./i)).not.toBeInTheDocument();
+  });
+
+  it('should render "Favorites" when user navigate to "/favorites" with authorization', () => {
+    store = createFakeStore({
+      OFFERS: { offers: [], isDataLoaded: true },
+      CITIES: { city: "Paris" },
+      USER: {
+        authorizationStatus: AuthorizationStatus.AUTH,
+        user: { login: "login", avatarUrl: "url" },
+      },
+      ROOM: {
+        nearbyOffers: [],
+        currentRoom: {},
+        comments: [],
+      },
+      FAVORITES: {
+        favoritesList: []
+      }
+    });
+
+    fakeApp = (
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+
+    history.push(AppRoute.FAVORITES);
+    render(fakeApp);
+
+    expect(screen.getByText("Saved listing")).toBeInTheDocument();
   });
 
   it('should render "ErrorPage" when user navigate to non-existent route', () => {
