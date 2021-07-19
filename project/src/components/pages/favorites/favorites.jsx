@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import favoritesCityProp from './favorites-city/favorites-city.prop';
 import { fetchfFavoritesOffers } from '../../../store/api-actions';
 import Header from '../../common/header/header';
-import { store } from '../../../index';
 import { getFavoritesOffers } from '../../../store/favorites/selectors';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 function Favorites({ favoritesOffers = {} }) {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    store.dispatch(fetchfFavoritesOffers());
+    dispatch(fetchfFavoritesOffers());
   }, []);
 
   const isFavoritelList = !!Object.keys(favoritesOffers).length;

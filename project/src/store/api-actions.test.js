@@ -5,6 +5,8 @@ import {
   checkAuth,
   fetchOffers,
   fetchCurrentRoom,
+  fetchNearbyOffers,
+  fetchComments,
   login,
   logout,
   fetchfFavoritesOffers,
@@ -262,6 +264,43 @@ describe("Async operations", () => {
       title: "Beautiful & luxurious studio at great location",
       type: "apartment",
     };
+    const comments = [
+      {
+        comment: "comment",
+      },
+    ];
+    const notFoundUrl = "/404";
+
+    apiMock
+      .onGet(`${APIRoute.OFFERS}/${id}`)
+      .reply(200, room)
+
+    return checkFetchCurrentRoom(dispatch, () => {}, api)
+      .then(
+        () => {
+          expect(dispatch).toHaveBeenCalledTimes(1);
+
+          expect(dispatch).toHaveBeenNthCalledWith(1, {
+            type: ActionType.GET_CURRENT_ROOM,
+            payload: room,
+          });
+        },
+        () => {
+          expect(dispatch).toHaveBeenCalledTimes(1);
+
+          expect(dispatch).toHaveBeenNthCalledWith(1, {
+            type: ActionType.REDIRECT_TO_ROUTE,
+            payload: notFoundUrl,
+          });
+        }
+      )
+  });
+
+  it("should make a correct API call to GET /offer/id/nearby", () => {
+    const apiMock = new MockAdapter(api);
+    const id = 55;
+    const dispatch = jest.fn();
+    const checkFetchCurrentRoom = fetchNearbyOffers(id);
     const nearbyOffers = [
       {
         bedrooms: 3,
@@ -306,16 +345,10 @@ describe("Async operations", () => {
         type: "apartment",
       },
     ];
-    const comments = [
-      {
-        comment: "comment",
-      },
-    ];
-    const notFoundUrl = "/404";
 
     apiMock
-      .onGet(`${APIRoute.OFFERS}/${id}`)
-      .reply(200, room)
+      .onGet(`${APIRoute.OFFERS}/${id}/nearby`)
+      .reply(200, nearbyOffers)
 
     return checkFetchCurrentRoom(dispatch, () => {}, api)
       .then(
@@ -323,23 +356,39 @@ describe("Async operations", () => {
           expect(dispatch).toHaveBeenCalledTimes(1);
 
           expect(dispatch).toHaveBeenNthCalledWith(1, {
-            type: ActionType.GET_CURRENT_ROOM,
-            payload: room,
+            type: ActionType.GET_NEARBY_OFFERS,
+            payload: nearbyOffers,
           });
-        },
+        }
+      )
+  });
+
+  it("should make a correct API call to GET /comments/id", () => {
+    const apiMock = new MockAdapter(api);
+    const id = 55;
+    const dispatch = jest.fn();
+    const checkFetchCurrentRoom = fetchComments(id);
+    const comments = [
+      {
+        comment: "comment",
+      },
+    ];
+
+    apiMock
+      .onGet(`${APIRoute.COMMENTS}/${id}`)
+      .reply(200, comments)
+
+    return checkFetchCurrentRoom(dispatch, () => {}, api)
+      .then(
         () => {
           expect(dispatch).toHaveBeenCalledTimes(1);
 
           expect(dispatch).toHaveBeenNthCalledWith(1, {
-            type: ActionType.REDIRECT_TO_ROUTE,
-            payload: notFoundUrl,
+            type: ActionType.GET_COMMENTS,
+            payload: comments,
           });
         }
       )
-      .then(() => {
-        apiMock
-          .onGet(`${APIRoute.OFFERS}/${id}/nearby`)
-          .reply(200, nearbyOffers);
-      });
   });
+
 });

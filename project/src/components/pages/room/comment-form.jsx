@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import RatingStars from './rating-stars';
-import { store } from '../../../index';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { postComment } from '../../../store/api-actions';
 
 function CommentForm({ roomId }) {
+  const dispatch = useDispatch();
   const [formState, setFormState] = useState({
     rating: 0,
     comment: '',
@@ -29,7 +30,7 @@ function CommentForm({ roomId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    store.dispatch(postComment({
+    dispatch(postComment({
       id: roomId,
       comment: comment,
       rating: rating,
@@ -54,7 +55,7 @@ function CommentForm({ roomId }) {
         value={comment}
       />
       <div className="reviews__button-wrapper">
-        <p className="reviews__help">
+        <p className="reviews__help" data-testid="reviews-help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={comment.length < 50 || !rating}>Submit</button>

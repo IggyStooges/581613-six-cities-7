@@ -6,16 +6,18 @@ import OffersList from '../../common/offers-list/offers-list';
 import { useParams } from 'react-router-dom';
 import RoomProperty from './room-property';
 import Header from '../../common/header/header';
-import { fetchCurrentRoom } from '../../../store/api-actions';
-import { store } from '../../../index';
-import { connect } from 'react-redux';
+import { fetchCurrentRoom, fetchNearbyOffers, fetchComments } from '../../../store/api-actions';
+import { connect, useDispatch } from 'react-redux';
 import {getNearbyOffers,getCurrentRoom,getComments} from '../../../store/room/selectors';
 
 function Room({ currentRoom, comments, nearbyOffers }) {
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    store.dispatch(fetchCurrentRoom(id));
+    dispatch(fetchCurrentRoom(id));
+    dispatch(fetchNearbyOffers(id));
+    dispatch(fetchComments(id));
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   }, [id]);
 

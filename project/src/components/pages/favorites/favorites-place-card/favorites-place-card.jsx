@@ -26,7 +26,7 @@ function PlaceCard({ price, previewImage, apartmentType, rating, title, id }) {
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{width: `${(rating / 5) * 100}%`}}></span>
-            <span className="visually-hidden">Rating</span>
+            <span className="visually-hidden">{rating}</span>
           </div>
         </div>
         <h2 className="place-card__name">

@@ -5,24 +5,46 @@ import CommentForm from './comment-form';
 import ReviewsList from './reviews/reviews-list';
 import Map from '../../common/map/map';
 import { AuthorizationStatus } from '../../../const';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { authorizationStatusProp } from '../../app/app.prop';
-import {getAuthorizationStatus} from '../../../store/user/selectors';
-import { store } from '../../../index';
+import { getAuthorizationStatus } from '../../../store/user/selectors';
 import { markFavorite } from '../../../store/api-actions';
 
-function RoomProperty({ currentRoom, reviews, nearbyOffers, authorizationStatus }) {
-  const { id, images, title, description, isPremium, apartmentType, rating, bedrooms, maxAdults, price, goods, host, city, isFavorite } = currentRoom;
+function RoomProperty({
+  currentRoom,
+  reviews,
+  nearbyOffers,
+  authorizationStatus,
+}) {
+  const {
+    id,
+    images,
+    title,
+    description,
+    isPremium,
+    apartmentType,
+    rating,
+    bedrooms,
+    maxAdults,
+    price,
+    goods,
+    host,
+    city,
+    isFavorite,
+  } = currentRoom;
   const name = host?.name;
   const isPro = host?.isPro;
   const avatarUrl = host?.avatarUrl;
 
+  const dispatch = useDispatch();
 
   const handleFavoriteClick = () => {
-    store.dispatch(markFavorite({
-      id: id,
-      status: isFavorite ? 0 : 1,
-    }));
+    dispatch(
+      markFavorite({
+        id: id,
+        status: isFavorite ? 0 : 1,
+      }),
+    );
   };
 
   return (
@@ -32,7 +54,11 @@ function RoomProperty({ currentRoom, reviews, nearbyOffers, authorizationStatus 
           {images &&
             images.map((image) => (
               <div className="property__image-wrapper" key={image}>
-                <img className="property__image" src={image} alt="Photo studio" />
+                <img
+                  className="property__image"
+                  src={image}
+                  alt="Photo studio"
+                />
               </div>
             ))}
         </div>
@@ -45,10 +71,14 @@ function RoomProperty({ currentRoom, reviews, nearbyOffers, authorizationStatus 
             </div>
           )}
           <div className="property__name-wrapper">
-            <h1 className="property__name">
-              {title}
-            </h1>
-            <button className={`property__bookmark-button button ${isFavorite ? 'property__bookmark-button--active' : ''}`} type="button" onClick={handleFavoriteClick}>
+            <h1 className="property__name">{title}</h1>
+            <button
+              className={`property__bookmark-button button ${
+                isFavorite ? 'property__bookmark-button--active' : ''
+              }`}
+              type="button"
+              onClick={handleFavoriteClick}
+            >
               <svg className="property__bookmark-icon" width="31" height="33">
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>
@@ -60,15 +90,18 @@ function RoomProperty({ currentRoom, reviews, nearbyOffers, authorizationStatus 
               <span style={{ width: `${(rating / 5) * 100}%` }}></span>
               <span className="visually-hidden">Rating</span>
             </div>
-            {rating && <span className="property__rating-value rating__value">{rating}</span>}
+            {rating && (
+              <span className="property__rating-value rating__value">
+                {rating}
+              </span>
+            )}
           </div>
           <ul className="property__features">
-            {
-              apartmentType &&
+            {apartmentType && (
               <li className="property__feature property__feature--entire">
                 {apartmentType}
               </li>
-            }
+            )}
             {bedrooms && (
               <li className="property__feature property__feature--bedrooms">
                 {bedrooms} Bedrooms
@@ -89,61 +122,57 @@ function RoomProperty({ currentRoom, reviews, nearbyOffers, authorizationStatus 
           <div className="property__inside">
             <h2 className="property__inside-title">What&apos;s inside</h2>
             <ul className="property__inside-list">
-              {goods && (
+              {goods &&
                 goods.map((good) => (
                   <li className="property__inside-item" key={good}>
                     {good}
                   </li>
-                ))
-              )}
+                ))}
             </ul>
           </div>
           <div className="property__host">
             <h2 className="property__host-title">Meet the host</h2>
             <div className="property__host-user user">
-              {
-                avatarUrl && (
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={avatarUrl} width="74" height="74" alt="Host avatar" />
-                  </div>
-                )
-              }
-              {
-                name && (
-                  <span className="property__user-name">
-                    {name}
-                  </span>
-                )
-              }
-              {
-                isPro && (
-                  <span className="property__user-status">
-                    Pro
-                  </span>
-                )
-              }
-            </div>
-            {
-              description && (
-                <div className="property__description">
-                  {
-                    description.split('.').map((sentence) => (
-                      <p className="property__text" key={sentence}>
-                        {sentence}
-                      </p>))
-                  }
+              {avatarUrl && (
+                <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
+                  <img
+                    className="property__avatar user__avatar"
+                    src={avatarUrl}
+                    width="74"
+                    height="74"
+                    alt="Host avatar"
+                  />
                 </div>
-              )
-            }
+              )}
+              {name && <span className="property__user-name">{name}</span>}
+              {isPro && <span className="property__user-status">Pro</span>}
+            </div>
+            {description && (
+              <div className="property__description">
+                {description.split('.').map((sentence) => (
+                  <p className="property__text" key={sentence}>
+                    {sentence}
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
           <section className="property__reviews reviews">
-            <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+            <h2 className="reviews__title">
+              Reviews &middot; <span className="reviews__amount">1</span>
+            </h2>
             <ReviewsList reviews={reviews} />
-            {authorizationStatus === AuthorizationStatus.AUTH && <CommentForm roomId={id} />}
+            {authorizationStatus === AuthorizationStatus.AUTH && (
+              <CommentForm roomId={id} />
+            )}
           </section>
         </div>
       </div>
-      <section className="property__map map">{nearbyOffers && <Map offers={nearbyOffers} cityLocation={city?.location} />}</section>
+      <section className="property__map map">
+        {nearbyOffers && (
+          <Map offers={nearbyOffers} cityLocation={city?.location} />
+        )}
+      </section>
     </section>
   );
 }

@@ -5,13 +5,13 @@ import configureStore from 'redux-mock-store';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { AuthorizationStatus } from '../../../const';
-import ErrorPage from './error-page';
+import CommentForm from './comment-form';
 
 let store = null;
 let fakeApp = null;
 let history = null;
 
-describe('Component: ErrorPage', () => {
+describe('Component: CommentForm', () => {
   beforeAll(() => {
     history = createMemoryHistory();
     const createFakeStore = configureStore({});
@@ -24,7 +24,7 @@ describe('Component: ErrorPage', () => {
     fakeApp = (
       <Provider store={store}>
         <Router history={history}>
-          <ErrorPage />
+          <CommentForm />
         </Router>
       </Provider>
     );
@@ -33,10 +33,11 @@ describe('Component: ErrorPage', () => {
   it('should render correctly', () => {
     render(fakeApp);
 
-    const headerElement = screen.getByText("404. Sorry... Page Not Found.");
-    const linkElement = screen.getByText("Вернуться на главную");
+    expect(screen.getByText("Your review")).toBeInTheDocument();
+    expect(screen.getByText("Submit")).toBeInTheDocument();
+    expect(screen.getByText("rating")).toBeInTheDocument();
+    expect(screen.getByText("50 characters")).toBeInTheDocument();
+    expect(screen.getByTestId("reviews-help")).toBeInTheDocument();
 
-    expect(headerElement).toBeInTheDocument();
-    expect(linkElement).toBeInTheDocument();
   });
 });
