@@ -1,10 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login } from '../../../store/api-actions';
+import { AppRoute, AuthorizationStatus } from '../../../const';
+import { useHistory } from 'react-router';
 import Header from '../../common/header/header';
+import { authorizationStatusProp } from '../../app/app.prop';
 
-function SignIn({ onSubmit }) {
+function SignIn({ authorizationStatus, onSubmit }) {
+  const history = useHistory();
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      history.push(AppRoute.MAIN);
+    }
+  }, []);
+
   const loginRef = useRef();
   const passwordRef = useRef();
 
@@ -50,6 +61,7 @@ function SignIn({ onSubmit }) {
 }
 
 SignIn.propTypes = {
+  authorizationStatus: authorizationStatusProp.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 

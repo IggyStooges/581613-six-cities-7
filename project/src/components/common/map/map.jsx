@@ -7,7 +7,8 @@ import { ZOOM, ICON } from '../../../const';
 import {getHoverCardIndex} from '../../../store/offers/selectors';
 import 'leaflet/dist/leaflet.css';
 
-function Map({ cityLocation, offers, hoverCardIndex }) {
+function Map({ cityLocation, offers, hoverCardIndex, currentRoomId }) {
+
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
   const locations = offers.map((offer) => offer.location);
@@ -43,11 +44,21 @@ function Map({ cityLocation, offers, hoverCardIndex }) {
     if (mapInstance.current) {
       mapInstance.current.setView(cityLocationCoordinates, ZOOM);
 
-      locations.forEach((location) => {
-        const icon = leaflet.icon({
-          iconUrl: ICON.iconUrl,
-          iconSize: ICON.iconSize,
-        });
+      locations?.forEach((location) => {
+        let icon = null;
+        const isActiveIcon = currentRoomId === location.id;
+
+        if (isActiveIcon) {
+          icon = leaflet.icon({
+            iconUrl: ICON.activeIconUrl,
+            iconSize: ICON.iconSize,
+          });
+        } else {
+          icon = leaflet.icon({
+            iconUrl: ICON.iconUrl,
+            iconSize: ICON.iconSize,
+          });
+        }
 
         leaflet
           .marker({
@@ -58,13 +69,13 @@ function Map({ cityLocation, offers, hoverCardIndex }) {
       });
     }
 
-  }, [cityLocationCoordinates, locations]);
+  }, [cityLocationCoordinates, locations, currentRoomId]);
 
   useEffect(() => {
     const { current: instance } = mapInstance;
 
     if (mapInstance.current) {
-      locations.forEach((location, index) => {
+      locations?.forEach((location, index) => {
         const isActiveIcon = hoverCardIndex === index;
         let icon = null;
 

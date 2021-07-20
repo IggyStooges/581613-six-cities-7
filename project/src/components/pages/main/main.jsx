@@ -60,7 +60,7 @@ function Main({ offers, city = CityType.PARIS, onCityChange }) {
                   onSortOptionChange={handleSortOptionClick}
                   currentSortOption={currentSortOption}
                 />
-                <OffersList offers={sortedOffers} />
+                <OffersList offers={sortedOffers} hasCardHoverEffect />
               </section>
               <div className='cities__right-section'>
                 <section className='cities__map map'>
@@ -73,7 +73,7 @@ function Main({ offers, city = CityType.PARIS, onCityChange }) {
                 </section>
               </div>
             </div>
-          ) : <MainEmpty />}
+          ) : <MainEmpty city={city} />}
         </div>
       </main>
     </div>
