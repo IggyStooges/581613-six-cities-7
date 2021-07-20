@@ -19,6 +19,7 @@ describe('Component: CommentForm', () => {
       OFFERS: { offers: {}, isDataLoaded: true },
       CITIES: { city: 'Paris' },
       USER: { authorizationStatus: AuthorizationStatus.NO_AUTH, user: null },
+      ROOM: { nearbyOffers: [], currentRoom: {}, comments: [], error: null },
     });
 
     fakeApp = (

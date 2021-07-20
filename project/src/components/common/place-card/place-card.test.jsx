@@ -29,6 +29,7 @@ describe("Component: PlaceCard", () => {
             apartmentType="room"
             rating={5}
             title="cozy home"
+            hasHoverEffect={false}
           />
         </Router>
       </Provider>
