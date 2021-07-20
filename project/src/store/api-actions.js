@@ -1,5 +1,6 @@
 import {
   getComments,
+  getCommentsError,
   getOffers,
   getCurrentRoom,
   requireAuthorization,
@@ -61,16 +62,15 @@ export const logout = () => (dispatch, _getState, api) =>
     .then(() => dispatch(userLogout()));
 
 export const postComment = ({ comment, rating, id }) => (dispatch, _getState, api) =>
-  api
-    .post(
-      `${APIRoute.COMMENTS}/${id}`,
-      { comment, rating },
-      {
-        headers: {
-          'x-token': localStorage.getItem('token'),
-        },
+  api.post(
+    `${APIRoute.COMMENTS}/${id}`,
+    { comment, rating },
+    {
+      headers: {
+        'x-token': localStorage.getItem('token'),
       },
-    )
+    },
+  )
     .then(() => {
       api
         .get(`${APIRoute.COMMENTS}/${id}`, {
@@ -79,6 +79,9 @@ export const postComment = ({ comment, rating, id }) => (dispatch, _getState, ap
           },
         })
         .then(({ data }) => dispatch(getComments(data)));
+    })
+    .catch((error) => {
+      dispatch(getCommentsError(error));
     });
 
 export const fetchfFavoritesOffers = () => (dispatch, _getState, api) =>

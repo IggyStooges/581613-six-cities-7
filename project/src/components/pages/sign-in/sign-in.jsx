@@ -22,10 +22,12 @@ function SignIn({ authorizationStatus, onSubmit }) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
-      login: loginRef.current.value,
-      password: passwordRef.current.value,
-    });
+    if (passwordRef.current.value.trim()) {
+      onSubmit({
+        login: loginRef.current.value,
+        password: passwordRef.current.value,
+      });
+    }
   };
 
   return (

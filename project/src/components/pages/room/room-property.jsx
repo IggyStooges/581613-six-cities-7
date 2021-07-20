@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { offerProp, reviewProp } from '../../app/app.prop';
 import PropTypes from 'prop-types';
 import CommentForm from './comment-form';
@@ -9,6 +9,7 @@ import { connect, useDispatch } from 'react-redux';
 import { authorizationStatusProp } from '../../app/app.prop';
 import { getAuthorizationStatus } from '../../../store/user/selectors';
 import { markFavorite } from '../../../store/api-actions';
+import { hoverCityCard } from '../../../store/action';
 
 function RoomProperty({
   currentRoom,
@@ -29,7 +30,6 @@ function RoomProperty({
     price,
     goods,
     host,
-    city,
     isFavorite,
   } = currentRoom;
   const name = host?.name;
@@ -37,6 +37,10 @@ function RoomProperty({
   const avatarUrl = host?.avatarUrl;
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(hoverCityCard(id));
+  });
 
   const handleFavoriteClick = () => {
     dispatch(
@@ -170,7 +174,7 @@ function RoomProperty({
       </div>
       <section className="property__map map">
         {nearbyOffers.length && (
-          <Map offers={[currentRoom, ...nearbyOffers.slice(0, 3)]} cityLocation={city?.location} hasHoverEffect={false} currentRoomId={id} />
+          <Map offers={[currentRoom, ...nearbyOffers.slice(0, 3)]} hasHoverEffect={false} />
         )}
       </section>
     </section>

@@ -7,6 +7,11 @@ function SortOptions({ onSortOptionChange, currentSortOption }) {
 
   const sortOptionsValues = Object.values(sortOptions);
 
+  const handleSortOptionClick = (currentOption) => {
+    onSortOptionChange(currentOption);
+    setIslistOpened(false);
+  };
+
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
@@ -16,14 +21,14 @@ function SortOptions({ onSortOptionChange, currentSortOption }) {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={`places__options places__options--custom ${isListOpened && 'places__options--opened'}`} data-testid="options-list" >
+      <ul className={`places__options places__options--custom ${isListOpened && 'places__options--opened'}`} data-testid="options-list">
         {
           sortOptionsValues.map((option) => (
             <li
               key={option}
               className={`places__option ${option === currentSortOption && 'places__option--active'}`}
               tabIndex="0"
-              onClick={() => onSortOptionChange(option)}
+              onClick={() => handleSortOptionClick(option)}
             >
               {option}
             </li>

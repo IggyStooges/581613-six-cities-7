@@ -67,7 +67,6 @@ function Main({ offers, city = CityType.PARIS, onCityChange }) {
                   {currentCityData && (
                     <Map
                       offers={sortedOffers}
-                      cityLocation={currentCityData.location}
                     />
                   )}
                 </section>

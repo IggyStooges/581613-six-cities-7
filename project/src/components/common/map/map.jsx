@@ -7,12 +7,16 @@ import { ZOOM, ICON } from '../../../const';
 import {getHoverCardIndex} from '../../../store/offers/selectors';
 import 'leaflet/dist/leaflet.css';
 
-function Map({ cityLocation, offers, hoverCardIndex, currentRoomId }) {
-
+function Map({ offers, hoverCardIndex }) {
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
-  const locations = offers.map((offer) => offer.location);
-  const cityLocationCoordinates = cityLocation ? Object.values(cityLocation).slice(0, 2) : [0, 0];
+  const locations = offers.map((offer) => ({
+    location: offer.location,
+    locationId: offer.id,
+  }));
+
+  const cityLocation = offers[0]?.city.location;
+  const cityLocationCoordinates = Object.values(cityLocation).slice(0, 2);
 
   useEffect(() => {
     const { current: mapContainer } = mapRef;
@@ -35,48 +39,33 @@ function Map({ cityLocation, offers, hoverCardIndex, currentRoomId }) {
         .addTo(instance);
 
       mapInstance.current = instance;
+
+      return () => {
+        mapInstance.current.remove();
+      };
     }
 
-  }, [mapRef, hoverCardIndex, cityLocation]);
+  }, []);
 
   useEffect(() => {
-
-    if (mapInstance.current) {
-      mapInstance.current.setView(cityLocationCoordinates, ZOOM);
-
-      locations?.forEach((location) => {
-        let icon = null;
-        const isActiveIcon = currentRoomId === location.id;
-
-        if (isActiveIcon) {
-          icon = leaflet.icon({
-            iconUrl: ICON.activeIconUrl,
-            iconSize: ICON.iconSize,
-          });
-        } else {
-          icon = leaflet.icon({
-            iconUrl: ICON.iconUrl,
-            iconSize: ICON.iconSize,
-          });
-        }
-
-        leaflet
-          .marker({
-            lat: location?.latitude,
-            lng: location?.longitude,
-          }, { icon })
-          .addTo(mapInstance.current);
-      });
+    if (!mapInstance.current) {
+      return;
     }
 
-  }, [cityLocationCoordinates, locations, currentRoomId]);
+    mapInstance.current.setView(cityLocationCoordinates, ZOOM);
+
+  }, [offers]);
 
   useEffect(() => {
+    if (!mapInstance.current) {
+      return;
+    }
+
     const { current: instance } = mapInstance;
 
-    if (mapInstance.current) {
-      locations?.forEach((location, index) => {
-        const isActiveIcon = hoverCardIndex === index;
+    if (instance) {
+      locations?.forEach(({location, locationId}) => {
+        const isActiveIcon = hoverCardIndex === locationId;
         let icon = null;
 
         if (isActiveIcon) {
@@ -109,11 +98,6 @@ function Map({ cityLocation, offers, hoverCardIndex, currentRoomId }) {
 
 Map.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
-  cityLocation: PropTypes.shape({
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-    zoom: PropTypes.number.isRequired,
-  }),
   hoverCardIndex: PropTypes.number,
 };
 

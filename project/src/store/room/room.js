@@ -6,6 +6,7 @@ const initialState = {
   nearbyOffers: [],
   currentRoom: {},
   comments: [],
+  error: null,
 };
 
 const room = (state = initialState, action) => {
@@ -24,6 +25,11 @@ const room = (state = initialState, action) => {
       return {
         ...state,
         comments: adaptDataList(action.payload),
+      };
+    case ActionType.GET_COMMENTS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;
