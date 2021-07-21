@@ -15,18 +15,15 @@ function Map({ offers, hoverCardIndex }) {
     locationId: offer.id,
   }));
 
-  const cityLocation = offers[0]?.city.location;
+  const cityLocation = offers[0]?.city?.location;
   const cityLocationCoordinates = Object.values(cityLocation).slice(0, 2);
 
   useEffect(() => {
     const { current: mapContainer } = mapRef;
 
     if (mapContainer && mapInstance.current === null) {
-      const instance = leaflet.map(mapContainer, {
-        center: {
-          lat: cityLocation?.latitude,
-          lng: cityLocation?.longitude,
-        },
+      mapInstance.current = leaflet.map(mapContainer, {
+        center: cityLocationCoordinates,
         zoom: cityLocation?.zoom,
         zoomControl: false,
         marker: true,
@@ -36,14 +33,12 @@ function Map({ offers, hoverCardIndex }) {
         .tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         })
-        .addTo(instance);
-
-      mapInstance.current = instance;
-
-      return () => {
-        mapInstance.current.remove();
-      };
+        .addTo(mapInstance.current);
     }
+
+    return () => {
+      mapInstance.current.remove();
+    };
 
   }, []);
 
@@ -52,44 +47,36 @@ function Map({ offers, hoverCardIndex }) {
       return;
     }
 
-    mapInstance.current.setView(cityLocationCoordinates, ZOOM);
-
-  }, [offers]);
-
-  useEffect(() => {
-    if (!mapInstance.current) {
-      return;
-    }
-
     const { current: instance } = mapInstance;
 
-    if (instance) {
-      locations?.forEach(({location, locationId}) => {
-        const isActiveIcon = hoverCardIndex === locationId;
-        let icon = null;
+    const iconsGroup = leaflet.layerGroup().addTo(instance);
 
-        if (isActiveIcon) {
-          icon = leaflet.icon({
-            iconUrl: ICON.activeIconUrl,
-            iconSize: ICON.iconSize,
-          });
-        } else {
-          icon = leaflet.icon({
-            iconUrl: ICON.iconUrl,
-            iconSize: ICON.iconSize,
-          });
-        }
-
-        leaflet
-          .marker({
-            lat: location?.latitude,
-            lng: location?.longitude,
-          }, { icon })
-          .addTo(instance);
+    locations?.forEach(({location, locationId}) => {
+      const isActiveIcon = hoverCardIndex === locationId;
+      const activeIcon = leaflet.icon({
+        iconUrl: ICON.activeIconUrl,
+        iconSize: ICON.iconSize,
       });
-    }
+      const defaultIcon = leaflet.icon({
+        iconUrl: ICON.iconUrl,
+        iconSize: ICON.iconSize,
+      });
 
-  }, [hoverCardIndex, locations]);
+      leaflet
+        .marker({
+          lat: location?.latitude,
+          lng: location?.longitude,
+        }, {icon: isActiveIcon ? activeIcon : defaultIcon})
+        .addTo(iconsGroup);
+    });
+
+    instance.setView(cityLocationCoordinates, ZOOM);
+
+    return () => {
+      iconsGroup.clearLayers();
+    };
+
+  }, [hoverCardIndex, offers, cityLocationCoordinates]);
 
   return (
     <div ref={mapRef} style={{ height: '100%', width: '100%' }}></div>
