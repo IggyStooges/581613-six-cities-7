@@ -3,7 +3,7 @@ import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { offerProp } from '../../app/app.prop';
-import { ZOOM, ICON } from '../../../const';
+import { ZOOM, ICON, CITY } from '../../../const';
 import {getHoverCardIndex} from '../../../store/offers/selectors';
 import 'leaflet/dist/leaflet.css';
 
@@ -16,7 +16,7 @@ function Map({ offers, hoverCardIndex }) {
   }));
 
   const cityLocation = offers[0]?.city?.location;
-  const cityLocationCoordinates = Object.values(cityLocation).slice(0, 2);
+  const cityLocationCoordinates = cityLocation ? Object.values(cityLocation).slice(0, 2) : CITY;
 
   useEffect(() => {
     const { current: mapContainer } = mapRef;
@@ -64,8 +64,8 @@ function Map({ offers, hoverCardIndex }) {
 
       leaflet
         .marker({
-          lat: location?.latitude,
-          lng: location?.longitude,
+          lat: location?.latitude || CITY[0],
+          lng: location?.longitude || CITY[1],
         }, {icon: isActiveIcon ? activeIcon : defaultIcon})
         .addTo(iconsGroup);
     });
