@@ -15,16 +15,13 @@ function Map({ offers, hoverCardIndex }) {
     locationId: offer.id,
   }));
 
-  const cityLocation = offers[0]?.city?.location;
-  const cityLocationCoordinates = cityLocation ? Object.values(cityLocation).slice(0, 2) : CITY;
-
   useEffect(() => {
     const { current: mapContainer } = mapRef;
 
     if (mapContainer && mapInstance.current === null) {
       mapInstance.current = leaflet.map(mapContainer, {
-        center: cityLocationCoordinates,
-        zoom: cityLocation?.zoom,
+        center: CITY,
+        zoom: ZOOM,
         zoomControl: false,
         marker: true,
       });
@@ -50,7 +47,9 @@ function Map({ offers, hoverCardIndex }) {
     const { current: instance } = mapInstance;
 
     const iconsGroup = leaflet.layerGroup().addTo(instance);
-
+    const cityLocation = offers[0]?.city?.location;
+    const cityLocationCoordinates = cityLocation ? Object.values(cityLocation).slice(0, 2) : CITY;
+  
     locations?.forEach(({location, locationId}) => {
       const isActiveIcon = hoverCardIndex === locationId;
       const activeIcon = leaflet.icon({
@@ -76,7 +75,7 @@ function Map({ offers, hoverCardIndex }) {
       iconsGroup.clearLayers();
     };
 
-  }, [hoverCardIndex, offers, cityLocationCoordinates]);
+  }, [hoverCardIndex, offers]);
 
   return (
     <div ref={mapRef} style={{ height: '100%', width: '100%' }}></div>

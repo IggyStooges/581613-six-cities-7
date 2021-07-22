@@ -8,6 +8,7 @@ import { AuthorizationStatus } from '../../../const';
 import { connect, useDispatch } from 'react-redux';
 import { authorizationStatusProp } from '../../app/app.prop';
 import { getAuthorizationStatus } from '../../../store/user/selectors';
+import { getRoomDataLoadedStatus } from '../../../store/room/selectors';
 import { markFavorite } from '../../../store/api-actions';
 import { hoverCityCard } from '../../../store/action';
 
@@ -16,6 +17,7 @@ function RoomProperty({
   reviews,
   nearbyOffers,
   authorizationStatus,
+  isRoomDataLoaded,
 }) {
   const {
     id,
@@ -41,6 +43,8 @@ function RoomProperty({
   useEffect(() => {
     dispatch(hoverCityCard(id));
   });
+
+  console.log(isRoomDataLoaded)
 
   const handleFavoriteClick = () => {
     dispatch(
@@ -173,7 +177,7 @@ function RoomProperty({
         </div>
       </div>
       <section className="property__map map">
-        {nearbyOffers.length && (
+        {isRoomDataLoaded && (
           <Map offers={[currentRoom, ...nearbyOffers.slice(0, 3)]} hasHoverEffect={false} />
         )}
       </section>
@@ -186,10 +190,12 @@ RoomProperty.propTypes = {
   reviews: PropTypes.arrayOf(reviewProp),
   nearbyOffers: PropTypes.arrayOf(offerProp).isRequired,
   authorizationStatus: authorizationStatusProp,
+  isRoomDataLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
+  isRoomDataLoaded: getRoomDataLoadedStatus(state),
 });
 
 export { RoomProperty };
