@@ -14,7 +14,7 @@ function SignIn({ authorizationStatus, onSubmit }) {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       history.push(AppRoute.MAIN);
     }
-  }, []);
+  }, [authorizationStatus, history]);
 
   const loginRef = useRef();
   const passwordRef = useRef();

@@ -19,7 +19,7 @@ function Room({ currentRoom, comments, nearbyOffers }) {
     dispatch(fetchNearbyOffers(id));
     dispatch(fetchComments(id));
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-  }, [id]);
+  }, [id, dispatch]);
 
   return (
     <div className="page">

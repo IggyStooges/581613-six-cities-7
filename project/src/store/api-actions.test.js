@@ -1,6 +1,6 @@
-import MockAdapter from "axios-mock-adapter";
-import { createAPI } from "../api";
-import { ActionType } from "./action";
+import MockAdapter from 'axios-mock-adapter';
+import { createAPI } from '../api';
+import { ActionType } from './action';
 import {
   checkAuth,
   fetchOffers,
@@ -9,32 +9,32 @@ import {
   fetchComments,
   login,
   logout,
-  fetchfFavoritesOffers,
-} from "./api-actions";
-import { APIRoute, AppRoute, AuthorizationStatus } from "../const";
+  fetchFavoritesOffers
+} from './api-actions';
+import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 
 let api = null;
 
-describe("Async operations", () => {
+describe('Async operations', () => {
   beforeAll(() => {
     api = createAPI(() => {});
   });
 
-  it("should make a correct API call to GET /login", () => {
+  it('should make a correct API call to GET /login', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const checkAuthLoader = checkAuth();
 
     apiMock
       .onGet(APIRoute.LOGIN)
-      .reply(200, { avatar_url: "url", email: "login" });
+      .reply(200, { avatarUrl: 'url', email: 'login' });
 
     return checkAuthLoader(dispatch, () => {}, api).then(() => {
       expect(dispatch).toHaveBeenCalledTimes(2);
 
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.USER,
-        payload: { avatarUrl: "url", login: "login" },
+        payload: { avatarUrl: 'url', login: 'login' },
       });
 
       expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -44,22 +44,22 @@ describe("Async operations", () => {
     });
   });
 
-  it("should make a correct API call to POST /login", () => {
+  it('should make a correct API call to POST /login', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const fakeUser = { login: "email@email.ru", password: "123456" };
+    const fakeUser = { login: 'email@email.ru', password: '123456' };
     const loginLoader = login(fakeUser);
 
     apiMock
       .onPost(APIRoute.LOGIN)
-      .reply(200, { avatar_url: "url", email: "login" });
+      .reply(200, { avatarUrl: 'url', email: 'login' });
 
     return loginLoader(dispatch, () => {}, api).then(() => {
       expect(dispatch).toHaveBeenCalledTimes(3);
 
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: ActionType.USER,
-        payload: { avatarUrl: "url", login: "login" },
+        payload: { avatarUrl: 'url', login: 'login' },
       });
 
       expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -74,7 +74,7 @@ describe("Async operations", () => {
     });
   });
 
-  it("should make a correct API call to DELETE /logout", () => {
+  it('should make a correct API call to DELETE /logout', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const logoutLoader = logout();
@@ -86,7 +86,7 @@ describe("Async operations", () => {
     return logoutLoader(
       dispatch,
       jest.fn(() => {}),
-      api
+      api,
     ).then(() => {
       expect(dispatch).toBeCalledTimes(1);
       expect(dispatch).nthCalledWith(1, {
@@ -95,7 +95,7 @@ describe("Async operations", () => {
     });
   });
 
-  it("should make a correct API call to GET /offers", () => {
+  it('should make a correct API call to GET /offers', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
     const checkFetchOffers = fetchOffers();
@@ -108,39 +108,39 @@ describe("Async operations", () => {
             longitude: 4.895168,
             zoom: 10,
           },
-          name: "Amsterdam",
+          name: 'Amsterdam',
         },
         description:
-          "A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.",
+          'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
         goods: [
-          "Heating",
-          "Kitchen",
-          "Cable TV",
-          "Washing machine",
-          "Coffee machine",
-          "Dishwasher",
+          'Heating',
+          'Kitchen',
+          'Cable TV',
+          'Washing machine',
+          'Coffee machine',
+          'Dishwasher',
         ],
         host: {
-          avatar_url: "img/1.png",
+          avatarUrl: 'img/1.png',
           id: 3,
-          is_pro: true,
-          name: "Angelina",
+          isPro: true,
+          name: 'Angelina',
         },
         id: 1,
-        images: ["img/1.png", "img/2.png"],
-        is_favorite: false,
-        is_premium: false,
+        images: ['img/1.png', 'img/2.png'],
+        isFavorite: false,
+        isPremium: false,
         location: {
           latitude: 52.35514938496378,
           longitude: 4.673877537499948,
           zoom: 8,
         },
-        max_adults: 4,
-        preview_image: "img/1.png",
+        maxAdults: 4,
+        previewImage: 'img/1.png',
         price: 120,
         rating: 4.8,
-        title: "Beautiful & luxurious studio at great location",
-        type: "apartment",
+        title: 'Beautiful & luxurious studio at great location',
+        type: 'apartment',
       },
     ];
 
@@ -156,10 +156,10 @@ describe("Async operations", () => {
     });
   });
 
-  it("should make a correct API call to GET /favorites", () => {
+  it('should make a correct API call to GET /favorites', () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const checkFetchFavoritesOffers = fetchfFavoritesOffers();
+    const checkFetchFavoritesOffers = fetchFavoritesOffers();
     const favoritesOffers = [
       {
         bedrooms: 3,
@@ -169,39 +169,39 @@ describe("Async operations", () => {
             longitude: 4.895168,
             zoom: 10,
           },
-          name: "Amsterdam",
+          name: 'Amsterdam',
         },
         description:
-          "A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.",
+          'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
         goods: [
-          "Heating",
-          "Kitchen",
-          "Cable TV",
-          "Washing machine",
-          "Coffee machine",
-          "Dishwasher",
+          'Heating',
+          'Kitchen',
+          'Cable TV',
+          'Washing machine',
+          'Coffee machine',
+          'Dishwasher',
         ],
         host: {
-          avatar_url: "img/1.png",
+          avatarUrl: 'img/1.png',
           id: 3,
-          is_pro: true,
-          name: "Angelina",
+          isPro: true,
+          name: 'Angelina',
         },
         id: 1,
-        images: ["img/1.png", "img/2.png"],
-        is_favorite: false,
-        is_premium: false,
+        images: ['img/1.png', 'img/2.png'],
+        isFavorite: false,
+        isPremium: false,
         location: {
           latitude: 52.35514938496378,
           longitude: 4.673877537499948,
           zoom: 8,
         },
-        max_adults: 4,
-        preview_image: "img/1.png",
+        maxAdults: 4,
+        previewImage: 'img/1.png',
         price: 120,
         rating: 4.8,
-        title: "Beautiful & luxurious studio at great location",
-        type: "apartment",
+        title: 'Beautiful & luxurious studio at great location',
+        type: 'apartment',
       },
     ];
 
@@ -217,7 +217,7 @@ describe("Async operations", () => {
     });
   });
 
-  it("should make a correct API call to GET /offer/id", () => {
+  it('should make a correct API call to GET /offer/id', () => {
     const apiMock = new MockAdapter(api);
     const id = 55;
     const dispatch = jest.fn();
@@ -230,50 +230,45 @@ describe("Async operations", () => {
           longitude: 4.895168,
           zoom: 10,
         },
-        name: "Amsterdam",
+        name: 'Amsterdam',
       },
       description:
-        "A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.",
+        'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
       goods: [
-        "Heating",
-        "Kitchen",
-        "Cable TV",
-        "Washing machine",
-        "Coffee machine",
-        "Dishwasher",
+        'Heating',
+        'Kitchen',
+        'Cable TV',
+        'Washing machine',
+        'Coffee machine',
+        'Dishwasher',
       ],
       host: {
-        avatar_url: "img/1.png",
+        avatarUrl: 'img/1.png',
         id: 3,
-        is_pro: true,
-        name: "Angelina",
+        isPro: true,
+        name: 'Angelina',
       },
       id,
-      images: ["img/1.png", "img/2.png"],
-      is_favorite: false,
-      is_premium: false,
+      images: ['img/1.png', 'img/2.png'],
+      isFavorite: false,
+      isPremium: false,
       location: {
         latitude: 52.35514938496378,
         longitude: 4.673877537499948,
         zoom: 8,
       },
-      max_adults: 4,
-      preview_image: "img/1.png",
+      maxAdults: 4,
+      previewImage: 'img/1.png',
       price: 120,
       rating: 4.8,
-      title: "Beautiful & luxurious studio at great location",
-      type: "apartment",
+      title: 'Beautiful & luxurious studio at great location',
+      type: 'apartment',
     };
-    const comments = [
-      {
-        comment: "comment",
-      },
-    ];
-    const notFoundUrl = "/404";
+    const notFoundUrl = '/404';
 
     apiMock
       .onGet(`${APIRoute.OFFERS}/${id}`)
-      .reply(200, room)
+      .reply(200, room);
 
     return checkFetchCurrentRoom(dispatch, () => {}, api)
       .then(
@@ -292,11 +287,11 @@ describe("Async operations", () => {
             type: ActionType.REDIRECT_TO_ROUTE,
             payload: notFoundUrl,
           });
-        }
-      )
+        },
+      );
   });
 
-  it("should make a correct API call to GET /offer/id/nearby", () => {
+  it('should make a correct API call to GET /offer/id/nearby', () => {
     const apiMock = new MockAdapter(api);
     const id = 55;
     const dispatch = jest.fn();
@@ -310,45 +305,45 @@ describe("Async operations", () => {
             longitude: 4.895168,
             zoom: 10,
           },
-          name: "Amsterdam",
+          name: 'Amsterdam',
         },
         description:
-          "A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.",
+          'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
         goods: [
-          "Heating",
-          "Kitchen",
-          "Cable TV",
-          "Washing machine",
-          "Coffee machine",
-          "Dishwasher",
+          'Heating',
+          'Kitchen',
+          'Cable TV',
+          'Washing machine',
+          'Coffee machine',
+          'Dishwasher',
         ],
         host: {
-          avatar_url: "img/1.png",
+          avatarUrl: 'img/1.png',
           id: 3,
-          is_pro: true,
-          name: "Angelina",
+          isPro: true,
+          name: 'Angelina',
         },
         id,
-        images: ["img/1.png", "img/2.png"],
-        is_favorite: false,
-        is_premium: false,
+        images: ['img/1.png', 'img/2.png'],
+        isFavorite: false,
+        isPremium: false,
         location: {
           latitude: 52.35514938496378,
           longitude: 4.673877537499948,
           zoom: 8,
         },
-        max_adults: 4,
-        preview_image: "img/1.png",
+        maxAdults: 4,
+        previewImage: 'img/1.png',
         price: 120,
         rating: 4.8,
-        title: "Beautiful & luxurious studio at great location",
-        type: "apartment",
+        title: 'Beautiful & luxurious studio at great location',
+        type: 'apartment',
       },
     ];
 
     apiMock
       .onGet(`${APIRoute.OFFERS}/${id}/nearby`)
-      .reply(200, nearbyOffers)
+      .reply(200, nearbyOffers);
 
     return checkFetchCurrentRoom(dispatch, () => {}, api)
       .then(
@@ -359,24 +354,24 @@ describe("Async operations", () => {
             type: ActionType.GET_NEARBY_OFFERS,
             payload: nearbyOffers,
           });
-        }
-      )
+        },
+      );
   });
 
-  it("should make a correct API call to GET /comments/id", () => {
+  it('should make a correct API call to GET /comments/id', () => {
     const apiMock = new MockAdapter(api);
     const id = 55;
     const dispatch = jest.fn();
     const checkFetchCurrentRoom = fetchComments(id);
     const comments = [
       {
-        comment: "comment",
+        comment: 'comment',
       },
     ];
 
     apiMock
       .onGet(`${APIRoute.COMMENTS}/${id}`)
-      .reply(200, comments)
+      .reply(200, comments);
 
     return checkFetchCurrentRoom(dispatch, () => {}, api)
       .then(
@@ -387,8 +382,8 @@ describe("Async operations", () => {
             type: ActionType.GET_COMMENTS,
             payload: comments,
           });
-        }
-      )
+        },
+      );
   });
 
 });

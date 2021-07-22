@@ -1,20 +1,20 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import { Router } from "react-router-dom";
-import { createMemoryHistory } from "history";
-import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
-import { AuthorizationStatus, AppRoute } from "../../const";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { Router } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+import { AuthorizationStatus, AppRoute } from '../../const';
 import thunk from 'redux-thunk';
 import { createAPI } from '../../api';
-import App from "./app";
+import App from './app';
 
 let history = null;
 let store = null;
 let fakeApp = null;
 let createFakeStore = null;
 
-describe("Application Routing", () => {
+describe('Application Routing', () => {
   beforeAll(() => {
     history = createMemoryHistory();
 
@@ -23,7 +23,7 @@ describe("Application Routing", () => {
     window.scrollTo = () => {};
     store = createFakeStore({
       OFFERS: { offers: [], isDataLoaded: true },
-      CITIES: { city: "Paris" },
+      CITIES: { city: 'Paris' },
       USER: { authorizationStatus: AuthorizationStatus.NO_AUTH, user: null },
       ROOM: {
         nearbyOffers: [],
@@ -46,7 +46,7 @@ describe("Application Routing", () => {
     history.push(AppRoute.ROOT);
     render(fakeApp);
 
-    expect(screen.getByText("No places to stay available")).toBeInTheDocument();
+    expect(screen.getByText('No places to stay available')).toBeInTheDocument();
   });
 
   it('should render "Login" when user navigate to "/login"', () => {
@@ -76,10 +76,10 @@ describe("Application Routing", () => {
   it('should render "Favorites" when user navigate to "/favorites" with authorization', () => {
     store = createFakeStore({
       OFFERS: { offers: [], isDataLoaded: true },
-      CITIES: { city: "Paris" },
+      CITIES: { city: 'Paris' },
       USER: {
         authorizationStatus: AuthorizationStatus.AUTH,
-        user: { login: "login", avatarUrl: "url" },
+        user: { login: 'login', avatarUrl: 'url' },
       },
       ROOM: {
         nearbyOffers: [],
@@ -88,8 +88,8 @@ describe("Application Routing", () => {
         isRoomDataLoaded: false,
       },
       FAVORITES: {
-        favoritesList: []
-      }
+        favoritesList: [],
+      },
     });
 
     fakeApp = (
@@ -103,17 +103,15 @@ describe("Application Routing", () => {
     history.push(AppRoute.FAVORITES);
     render(fakeApp);
 
-    expect(screen.getByText("Nothing yet saved.")).toBeInTheDocument();
-    expect(screen.getByText("Save properties to narrow down search or plan your future trips.")).toBeInTheDocument();
+    expect(screen.getByText('Nothing yet saved.')).toBeInTheDocument();
+    expect(screen.getByText('Save properties to narrow down search or plan your future trips.')).toBeInTheDocument();
   });
 
   it('should render "ErrorPage" when user navigate to non-existent route', () => {
     history.push(AppRoute.NOT_FOUND);
     render(fakeApp);
 
-    expect(
-      screen.getByText("404. Sorry... Page Not Found.")
-    ).toBeInTheDocument();
-    expect(screen.getByText("Вернуться на главную")).toBeInTheDocument();
+    expect(screen.getByText('404. Sorry... Page Not Found.')).toBeInTheDocument();
+    expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
   });
 });

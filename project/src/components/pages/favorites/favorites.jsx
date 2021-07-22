@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import FavoritesCity from './favorites-city/favorites-city';
 import PropTypes from 'prop-types';
 import favoritesCityProp from './favorites-city/favorites-city.prop';
-import { fetchfFavoritesOffers } from '../../../store/api-actions';
+import { fetchFavoritesOffers } from '../../../store/api-actions';
 import Header from '../../common/header/header';
 import { getFavoritesOffers } from '../../../store/favorites/selectors';
 import { connect, useDispatch } from 'react-redux';
@@ -11,16 +11,16 @@ function Favorites({ favoritesOffers = {} }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchfFavoritesOffers());
-  }, []);
+    dispatch(fetchFavoritesOffers());
+  }, [dispatch]);
 
-  const isFavoritelList = !!Object.keys(favoritesOffers).length;
+  const isFavouritelList = !!Object.keys(favoritesOffers).length;
 
   return (
     <div className="page">
       <Header />
       {
-        isFavoritelList ? (
+        isFavouritelList ? (
           <main className="page__main page__main--favorites">
             <div className="page__favorites-container container">
               <section className="favorites">

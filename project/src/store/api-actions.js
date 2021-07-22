@@ -37,7 +37,7 @@ export const checkAuth = () => (dispatch, _getState, api) =>
     .get(APIRoute.LOGIN)
     .then(({ data }) => {
       localStorage.setItem('token', data.token);
-      dispatch(getUserInfo({ login: data.email, avatarUrl: data.avatar_url }));
+      dispatch(getUserInfo({ login: data.email, avatarUrl: data.avatarUrl }));
     })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {});
@@ -49,7 +49,7 @@ export const login =
       .then(({ data }) => {
         localStorage.setItem('token', data.token);
         dispatch(
-          getUserInfo({ login: data.email, avatarUrl: data.avatar_url }),
+          getUserInfo({ login: data.email, avatarUrl: data.avatarUrl }),
         );
       })
       .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
@@ -84,7 +84,7 @@ export const postComment = ({ comment, rating, id }) => (dispatch, _getState, ap
       dispatch(getCommentsError(error));
     });
 
-export const fetchfFavoritesOffers = () => (dispatch, _getState, api) =>
+export const fetchFavoritesOffers = () => (dispatch, _getState, api) =>
   api
     .get(APIRoute.FAVORITES, {
       headers: {

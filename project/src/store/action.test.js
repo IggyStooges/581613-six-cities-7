@@ -11,20 +11,20 @@ import {
   redirectToRoute,
   getFavoritesOffers,
   markFavoriteOffer,
-  ActionType,
-} from "./action";
+  ActionType
+} from './action';
 
-describe("Actions", () => {
-  it("action creator for change city returns correct action", () => {
+describe('Actions', () => {
+  it('action creator for change city returns correct action', () => {
     const expectedAction = {
       type: ActionType.CHANGE_CITY,
-      payload: "Paris",
+      payload: 'Paris',
     };
 
-    expect(changeCity("Paris")).toEqual(expectedAction);
+    expect(changeCity('Paris')).toEqual(expectedAction);
   });
 
-  it("action creator for get offers returns correct action", () => {
+  it('action creator for get offers returns correct action', () => {
     const mockOffers = [
       {
         bedrooms: 3,
@@ -34,39 +34,39 @@ describe("Actions", () => {
             longitude: 4.895168,
             zoom: 10,
           },
-          name: "Amsterdam",
+          name: 'Amsterdam',
         },
         description:
-          "A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.",
+          'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
         goods: [
-          "Heating",
-          "Kitchen",
-          "Cable TV",
-          "Washing machine",
-          "Coffee machine",
-          "Dishwasher",
+          'Heating',
+          'Kitchen',
+          'Cable TV',
+          'Washing machine',
+          'Coffee machine',
+          'Dishwasher',
         ],
         host: {
-          avatar_url: "img/1.png",
+          avatarUrl: 'img/1.png',
           id: 3,
-          is_pro: true,
-          name: "Angelina",
+          isPro: true,
+          name: 'Angelina',
         },
         id: 1,
-        images: ["img/1.png", "img/2.png"],
-        is_favorite: false,
-        is_premium: false,
+        images: ['img/1.png', 'img/2.png'],
+        isFavorite: false,
+        isPremium: false,
         location: {
           latitude: 52.35514938496378,
           longitude: 4.673877537499948,
           zoom: 8,
         },
-        max_adults: 4,
-        preview_image: "img/1.png",
+        maxAdults: 4,
+        previewImage: 'img/1.png',
         price: 120,
         rating: 4.8,
-        title: "Beautiful & luxurious studio at great location",
-        type: "apartment",
+        title: 'Beautiful & luxurious studio at great location',
+        type: 'apartment',
       },
     ];
     const expectedAction = {
@@ -77,7 +77,7 @@ describe("Actions", () => {
     expect(getOffers(mockOffers)).toEqual(expectedAction);
   });
 
-  it("action creator for hover city card returns correct action", () => {
+  it('action creator for hover city card returns correct action', () => {
     const offerId = 55;
     const expectedAction = {
       type: ActionType.HOVER_CITY_CARD,
@@ -87,8 +87,8 @@ describe("Actions", () => {
     expect(hoverCityCard(offerId)).toEqual(expectedAction);
   });
 
-  it("action creator for require authorization returns correct action", () => {
-    const authorizationStatus = "AUTH";
+  it('action creator for require authorization returns correct action', () => {
+    const authorizationStatus = 'AUTH';
     const expectedAction = {
       type: ActionType.REQUIRED_AUTHORIZATION,
       payload: authorizationStatus,
@@ -97,8 +97,8 @@ describe("Actions", () => {
     expect(requireAuthorization(authorizationStatus)).toEqual(expectedAction);
   });
 
-  it("action creator for get user info returns correct action", () => {
-    const user = { login: "email@email.ru", avatarUrl: "url:src" };
+  it('action creator for get user info returns correct action', () => {
+    const user = { login: 'email@email.ru', avatarUrl: 'url:src' };
     const expectedAction = {
       type: ActionType.USER,
       payload: user,
@@ -107,7 +107,7 @@ describe("Actions", () => {
     expect(getUserInfo(user)).toEqual(expectedAction);
   });
 
-  it("action creator for get current room returns correct action", () => {
+  it('action creator for get current room returns correct action', () => {
     const room = {
       bedrooms: 3,
       city: {
@@ -116,39 +116,39 @@ describe("Actions", () => {
           longitude: 4.895168,
           zoom: 10,
         },
-        name: "Amsterdam",
+        name: 'Amsterdam',
       },
       description:
-        "A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.",
+        'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
       goods: [
-        "Heating",
-        "Kitchen",
-        "Cable TV",
-        "Washing machine",
-        "Coffee machine",
-        "Dishwasher",
+        'Heating',
+        'Kitchen',
+        'Cable TV',
+        'Washing machine',
+        'Coffee machine',
+        'Dishwasher',
       ],
       host: {
-        avatar_url: "img/1.png",
+        avatarUrl: 'img/1.png',
         id: 3,
-        is_pro: true,
-        name: "Angelina",
+        isPro: true,
+        name: 'Angelina',
       },
       id: 1,
-      images: ["img/1.png", "img/2.png"],
-      is_favorite: false,
-      is_premium: false,
+      images: ['img/1.png', 'img/2.png'],
+      isFavorite: false,
+      isPremium: false,
       location: {
         latitude: 52.35514938496378,
         longitude: 4.673877537499948,
         zoom: 8,
       },
-      max_adults: 4,
-      preview_image: "img/1.png",
+      maxAdults: 4,
+      previewImage: 'img/1.png',
       price: 120,
       rating: 4.8,
-      title: "Beautiful & luxurious studio at great location",
-      type: "apartment",
+      title: 'Beautiful & luxurious studio at great location',
+      type: 'apartment',
     };
     const expectedAction = {
       type: ActionType.GET_CURRENT_ROOM,
@@ -158,7 +158,7 @@ describe("Actions", () => {
     expect(getCurrentRoom(room)).toEqual(expectedAction);
   });
 
-  it("action creator for get nearby offers returns correct action", () => {
+  it('action creator for get nearby offers returns correct action', () => {
     const mockOffers = [
       {
         bedrooms: 3,
@@ -168,39 +168,39 @@ describe("Actions", () => {
             longitude: 4.895168,
             zoom: 10,
           },
-          name: "Amsterdam",
+          name: 'Amsterdam',
         },
         description:
-          "A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.",
+          'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
         goods: [
-          "Heating",
-          "Kitchen",
-          "Cable TV",
-          "Washing machine",
-          "Coffee machine",
-          "Dishwasher",
+          'Heating',
+          'Kitchen',
+          'Cable TV',
+          'Washing machine',
+          'Coffee machine',
+          'Dishwasher',
         ],
         host: {
-          avatar_url: "img/1.png",
+          avatarUrl: 'img/1.png',
           id: 3,
-          is_pro: true,
-          name: "Angelina",
+          isPro: true,
+          name: 'Angelina',
         },
         id: 1,
-        images: ["img/1.png", "img/2.png"],
-        is_favorite: false,
-        is_premium: false,
+        images: ['img/1.png', 'img/2.png'],
+        isFavorite: false,
+        isPremium: false,
         location: {
           latitude: 52.35514938496378,
           longitude: 4.673877537499948,
           zoom: 8,
         },
-        max_adults: 4,
-        preview_image: "img/1.png",
+        maxAdults: 4,
+        previewImage: 'img/1.png',
         price: 120,
         rating: 4.8,
-        title: "Beautiful & luxurious studio at great location",
-        type: "apartment",
+        title: 'Beautiful & luxurious studio at great location',
+        type: 'apartment',
       },
     ];
     const expectedAction = {
@@ -211,19 +211,19 @@ describe("Actions", () => {
     expect(getNearbyOffers(mockOffers)).toEqual(expectedAction);
   });
 
-  it("action creator for get comments returns correct action", () => {
+  it('action creator for get comments returns correct action', () => {
     const mockComments = [
       {
         comment:
-          "A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.",
-        date: "2019-05-08T14:13:56.569Z",
+          'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
+        date: '2019-05-08T14:13:56.569Z',
         id: 1,
         rating: 4,
         user: {
-          avatar_url: "img/1.png",
+          avatarUrl: 'img/1.png',
           id: 4,
-          is_pro: false,
-          name: "Max",
+          isPro: false,
+          name: 'Max',
         },
       },
     ];
@@ -235,7 +235,7 @@ describe("Actions", () => {
     expect(getComments(mockComments)).toEqual(expectedAction);
   });
 
-  it("action creator for logout returns correct action", () => {
+  it('action creator for logout returns correct action', () => {
     const expectedAction = {
       type: ActionType.LOGOUT,
     };
@@ -243,8 +243,8 @@ describe("Actions", () => {
     expect(userLogout()).toEqual(expectedAction);
   });
 
-  it("action creator for redirect to route returns correct action", () => {
-    const url = "/favorites";
+  it('action creator for redirect to route returns correct action', () => {
+    const url = '/favorites';
     const expectedAction = {
       type: ActionType.REDIRECT_TO_ROUTE,
       payload: url,
@@ -253,7 +253,7 @@ describe("Actions", () => {
     expect(redirectToRoute(url)).toEqual(expectedAction);
   });
 
-  it("action creator for get favorites offers returns correct action", () => {
+  it('action creator for get favorites offers returns correct action', () => {
     const mockOffers = [
       {
         bedrooms: 3,
@@ -263,39 +263,39 @@ describe("Actions", () => {
             longitude: 4.895168,
             zoom: 10,
           },
-          name: "Amsterdam",
+          name: 'Amsterdam',
         },
         description:
-          "A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.",
+          'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
         goods: [
-          "Heating",
-          "Kitchen",
-          "Cable TV",
-          "Washing machine",
-          "Coffee machine",
-          "Dishwasher",
+          'Heating',
+          'Kitchen',
+          'Cable TV',
+          'Washing machine',
+          'Coffee machine',
+          'Dishwasher',
         ],
         host: {
-          avatar_url: "img/1.png",
+          avatarUrl: 'img/1.png',
           id: 3,
-          is_pro: true,
-          name: "Angelina",
+          isPro: true,
+          name: 'Angelina',
         },
         id: 1,
-        images: ["img/1.png", "img/2.png"],
-        is_favorite: false,
-        is_premium: false,
+        images: ['img/1.png', 'img/2.png'],
+        isFavorite: false,
+        isPremium: false,
         location: {
           latitude: 52.35514938496378,
           longitude: 4.673877537499948,
           zoom: 8,
         },
-        max_adults: 4,
-        preview_image: "img/1.png",
+        maxAdults: 4,
+        previewImage: 'img/1.png',
         price: 120,
         rating: 4.8,
-        title: "Beautiful & luxurious studio at great location",
-        type: "apartment",
+        title: 'Beautiful & luxurious studio at great location',
+        type: 'apartment',
       },
     ];
     const expectedAction = {
@@ -306,7 +306,7 @@ describe("Actions", () => {
     expect(getFavoritesOffers(mockOffers)).toEqual(expectedAction);
   });
 
-  it("action creator for mark favorite offer returns correct action", () => {
+  it('action creator for mark favorite offer returns correct action', () => {
     const expectedAction = {
       type: ActionType.MARK_FAVORITE_OFFER,
     };

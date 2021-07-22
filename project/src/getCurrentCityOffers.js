@@ -1,5 +1,5 @@
-import sortbyCity from './utils/sortByCity';
+import sortByCity from './utils/sortByCity';
 
-const getCurrentCityOffers = (offers, currentCity) =>  sortbyCity(offers)[currentCity];
+const getCurrentCityOffers = (offers, currentCity) =>  sortByCity(offers)[currentCity];
 
 export default getCurrentCityOffers;

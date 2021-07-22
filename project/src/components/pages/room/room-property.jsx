@@ -63,7 +63,7 @@ function RoomProperty({
                 <img
                   className="property__image"
                   src={image}
-                  alt="Photo studio"
+                  alt={title}
                 />
               </div>
             ))}

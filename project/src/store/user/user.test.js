@@ -1,21 +1,21 @@
-import { user } from "./user";
-import { ActionType } from "../action";
+import { user } from './user';
+import { ActionType } from '../action';
 import { AuthorizationStatus } from '../../const';
 
 const initialState = {
-  authorizationStatus: "",
+  authorizationStatus: '',
   user: {
-    login: "",
-    avatarUrl: "",
+    login: '',
+    avatarUrl: '',
   },
 };
 
-describe("Reducer: user", () => {
-  it("without action should return initial state", () => {
+describe('Reducer: user', () => {
+  it('without action should return initial state', () => {
     expect(user(initialState, {})).toEqual(initialState);
   });
 
-  it("action required authorization should return updated state", () => {
+  it('action required authorization should return updated state', () => {
     const authorizationAction = {
       type: ActionType.REQUIRED_AUTHORIZATION,
       payload: AuthorizationStatus.AUTH,
@@ -24,19 +24,19 @@ describe("Reducer: user", () => {
     expect(user(initialState, authorizationAction)).toEqual({...initialState, authorizationStatus: authorizationAction.payload});
   });
 
-  it("action user should return updated state", () => {
+  it('action user should return updated state', () => {
     const userAction = {
       type: ActionType.USER,
       payload: {
         login: 'user',
-        email: 'email@email.ru'
+        email: 'email@email.ru',
       },
     };
 
     expect(user(initialState, userAction)).toEqual({...initialState, user: userAction.payload});
   });
 
-  it("action logout should return updated state", () => {
+  it('action logout should return updated state', () => {
     const logoutAction = {
       type: ActionType.LOGOUT,
     };

@@ -34,11 +34,11 @@ describe('Component: CommentForm', () => {
   it('should render correctly', () => {
     render(fakeApp);
 
-    expect(screen.getByText("Your review")).toBeInTheDocument();
-    expect(screen.getByText("Submit")).toBeInTheDocument();
-    expect(screen.getByText("rating")).toBeInTheDocument();
-    expect(screen.getByText("50 characters")).toBeInTheDocument();
-    expect(screen.getByTestId("reviews-help")).toBeInTheDocument();
+    expect(screen.getByText('Your review')).toBeInTheDocument();
+    expect(screen.getByText('Submit')).toBeInTheDocument();
+    expect(screen.getByText('rating')).toBeInTheDocument();
+    expect(screen.getByText('50 characters')).toBeInTheDocument();
+    expect(screen.getByTestId('reviews-help')).toBeInTheDocument();
 
   });
 });

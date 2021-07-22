@@ -33,8 +33,8 @@ describe('Component: ErrorPage', () => {
   it('should render correctly', () => {
     render(fakeApp);
 
-    const headerElement = screen.getByText("404. Sorry... Page Not Found.");
-    const linkElement = screen.getByText("Вернуться на главную");
+    const headerElement = screen.getByText('404. Sorry... Page Not Found.');
+    const linkElement = screen.getByText('Вернуться на главную');
 
     expect(headerElement).toBeInTheDocument();
     expect(linkElement).toBeInTheDocument();

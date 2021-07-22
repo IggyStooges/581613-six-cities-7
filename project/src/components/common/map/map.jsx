@@ -75,7 +75,7 @@ function Map({ offers, hoverCardIndex }) {
       iconsGroup.clearLayers();
     };
 
-  }, [hoverCardIndex, offers]);
+  }, [hoverCardIndex, offers, locations]);
 
   return (
     <div ref={mapRef} style={{ height: '100%', width: '100%' }}></div>
