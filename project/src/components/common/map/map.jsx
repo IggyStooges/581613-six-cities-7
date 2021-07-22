@@ -49,7 +49,7 @@ function Map({ offers, hoverCardIndex }) {
     const iconsGroup = leaflet.layerGroup().addTo(instance);
     const cityLocation = offers[0]?.city?.location;
     const cityLocationCoordinates = cityLocation ? Object.values(cityLocation).slice(0, 2) : CITY;
-  
+
     locations?.forEach(({location, locationId}) => {
       const isActiveIcon = hoverCardIndex === locationId;
       const activeIcon = leaflet.icon({

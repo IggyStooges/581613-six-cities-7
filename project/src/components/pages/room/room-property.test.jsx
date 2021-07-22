@@ -2,7 +2,6 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import { CityType } from "../../../const";
 import RoomProperty from "./room-property";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
@@ -80,6 +79,7 @@ describe("Component: RoomProperty", () => {
       OFFERS: { offers: {}, isDataLoaded: true },
       CITIES: { city: "Paris" },
       USER: { authorizationStatus: AuthorizationStatus.NO_AUTH, user: null },
+      ROOM: {isRoomDataLoaded: true}
     });
   });
 
@@ -92,6 +92,7 @@ describe("Component: RoomProperty", () => {
             currentRoom={mockOffers[0]}
             reviews={mockReviews}
             authorizationStatus={AuthorizationStatus.NO_AUTH}
+            isRoomDataLoaded
           />
         </Router>
       </Provider>

@@ -44,8 +44,6 @@ function RoomProperty({
     dispatch(hoverCityCard(id));
   });
 
-  console.log(isRoomDataLoaded)
-
   const handleFavoriteClick = () => {
     dispatch(
       markFavorite({
