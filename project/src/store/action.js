@@ -5,6 +5,7 @@ export const ActionType = {
   GET_CURRENT_ROOM: 'getCurrentRoom',
   GET_NEARBY_OFFERS: 'getNearbyOffers',
   GET_COMMENTS: 'getComments',
+  GET_COMMENTS_ERROR: 'getCommentsError',
   REQUIRED_AUTHORIZATION: 'requiredAuthorization',
   LOGOUT: 'logout',
   USER: 'getUserInfo',
@@ -51,6 +52,11 @@ export const getNearbyOffers = (offers) => ({
 export const getComments = (comments) => ({
   type: ActionType.GET_COMMENTS,
   payload: comments,
+});
+
+export const getCommentsError = (error) => ({
+  type: ActionType.GET_COMMENTS_ERROR,
+  payload: error,
 });
 
 export const userLogout = () => ({

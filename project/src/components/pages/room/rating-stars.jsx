@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 const RATING_MARKS = [5, 4, 3, 2, 1];
 
-function RatingStars({ onChange, rating }) {
-
+function RatingStars({ onChange, rating, isDisabled }) {
   return (
     <div className="reviews__rating-form form__rating">
       {RATING_MARKS.map((mark) => (
@@ -17,6 +16,7 @@ function RatingStars({ onChange, rating }) {
             type="radio"
             checked={rating === mark}
             onChange={onChange}
+            disabled={isDisabled}
           />
           <label htmlFor={`${mark}-stars`} className="reviews__rating-label form__rating-label" title="good">
             <svg className="form__star-image" width="37" height="33">
@@ -32,6 +32,7 @@ function RatingStars({ onChange, rating }) {
 RatingStars.propTypes = {
   onChange: PropTypes.func.isRequired,
   rating: PropTypes.number,
+  isDisabled: PropTypes.bool,
 };
 
 

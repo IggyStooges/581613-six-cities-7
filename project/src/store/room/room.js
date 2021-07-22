@@ -4,8 +4,10 @@ import adaptToClient, {adaptDataList} from '../../utils/adaptToClient';
 
 const initialState = {
   nearbyOffers: [],
-  currentRoom: {},
+  currentRoom: null,
   comments: [],
+  error: null,
+  isRoomDataLoaded: false,
 };
 
 const room = (state = initialState, action) => {
@@ -14,6 +16,7 @@ const room = (state = initialState, action) => {
       return {
         ...state,
         currentRoom: adaptToClient(action.payload),
+        isRoomDataLoaded: true,
       };
     case ActionType.GET_NEARBY_OFFERS:
       return {
@@ -24,6 +27,11 @@ const room = (state = initialState, action) => {
       return {
         ...state,
         comments: adaptDataList(action.payload),
+      };
+    case ActionType.GET_COMMENTS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

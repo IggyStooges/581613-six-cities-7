@@ -4,8 +4,10 @@ import adaptToClient, {adaptDataList} from '../../utils/adaptToClient';
 
 const initialState = {
   nearbyOffers: [],
-  currentRoom: {},
+  currentRoom: null,
   comments: [],
+  error: null,
+  isRoomDataLoaded: false,
 };
 
 describe("Reducer: room", () => {
@@ -60,7 +62,11 @@ describe("Reducer: room", () => {
       },
     };
 
-    expect(room(initialState, getCurrenRoomAction)).toEqual({...initialState, currentRoom: adaptToClient(getCurrenRoomAction.payload)});
+    expect(room(initialState, getCurrenRoomAction)).toEqual({
+        ...initialState, 
+        currentRoom: adaptToClient(getCurrenRoomAction.payload), 
+        isRoomDataLoaded: true
+      });
   });
 
   it("action login should return updated state", () => {

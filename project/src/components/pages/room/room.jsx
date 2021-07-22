@@ -26,11 +26,13 @@ function Room({ currentRoom, comments, nearbyOffers }) {
       <Header />
 
       <main className="page__main page__main--property">
-        <RoomProperty
-          currentRoom={currentRoom}
-          reviews={comments}
-          nearbyOffers={nearbyOffers}
-        />
+        {(currentRoom !== null) && (
+          <RoomProperty
+            currentRoom={currentRoom}
+            reviews={comments}
+            nearbyOffers={nearbyOffers}
+          />
+        )}
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>

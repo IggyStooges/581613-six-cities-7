@@ -3,26 +3,25 @@ import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { offerProp } from '../../app/app.prop';
-import { ZOOM, ICON } from '../../../const';
+import { ZOOM, ICON, CITY } from '../../../const';
 import {getHoverCardIndex} from '../../../store/offers/selectors';
 import 'leaflet/dist/leaflet.css';
 
-function Map({ cityLocation, offers, hoverCardIndex }) {
+function Map({ offers, hoverCardIndex }) {
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
-  const locations = offers.map((offer) => offer.location);
-  const cityLocationCoordinates = cityLocation ? Object.values(cityLocation).slice(0, 2) : [0, 0];
+  const locations = offers.map((offer) => ({
+    location: offer.location,
+    locationId: offer.id,
+  }));
 
   useEffect(() => {
     const { current: mapContainer } = mapRef;
 
     if (mapContainer && mapInstance.current === null) {
-      const instance = leaflet.map(mapContainer, {
-        center: {
-          lat: cityLocation?.latitude,
-          lng: cityLocation?.longitude,
-        },
-        zoom: cityLocation?.zoom,
+      mapInstance.current = leaflet.map(mapContainer, {
+        center: CITY,
+        zoom: ZOOM,
         zoomControl: false,
         marker: true,
       });
@@ -31,65 +30,52 @@ function Map({ cityLocation, offers, hoverCardIndex }) {
         .tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         })
-        .addTo(instance);
-
-      mapInstance.current = instance;
+        .addTo(mapInstance.current);
     }
 
-  }, [mapRef, hoverCardIndex, cityLocation]);
+    return () => {
+      mapInstance.current.remove();
+    };
+
+  }, []);
 
   useEffect(() => {
-
-    if (mapInstance.current) {
-      mapInstance.current.setView(cityLocationCoordinates, ZOOM);
-
-      locations.forEach((location) => {
-        const icon = leaflet.icon({
-          iconUrl: ICON.iconUrl,
-          iconSize: ICON.iconSize,
-        });
-
-        leaflet
-          .marker({
-            lat: location?.latitude,
-            lng: location?.longitude,
-          }, { icon })
-          .addTo(mapInstance.current);
-      });
+    if (!mapInstance.current) {
+      return;
     }
 
-  }, [cityLocationCoordinates, locations]);
-
-  useEffect(() => {
     const { current: instance } = mapInstance;
 
-    if (mapInstance.current) {
-      locations.forEach((location, index) => {
-        const isActiveIcon = hoverCardIndex === index;
-        let icon = null;
+    const iconsGroup = leaflet.layerGroup().addTo(instance);
+    const cityLocation = offers[0]?.city?.location;
+    const cityLocationCoordinates = cityLocation ? Object.values(cityLocation).slice(0, 2) : CITY;
 
-        if (isActiveIcon) {
-          icon = leaflet.icon({
-            iconUrl: ICON.activeIconUrl,
-            iconSize: ICON.iconSize,
-          });
-        } else {
-          icon = leaflet.icon({
-            iconUrl: ICON.iconUrl,
-            iconSize: ICON.iconSize,
-          });
-        }
-
-        leaflet
-          .marker({
-            lat: location?.latitude,
-            lng: location?.longitude,
-          }, { icon })
-          .addTo(instance);
+    locations?.forEach(({location, locationId}) => {
+      const isActiveIcon = hoverCardIndex === locationId;
+      const activeIcon = leaflet.icon({
+        iconUrl: ICON.activeIconUrl,
+        iconSize: ICON.iconSize,
       });
-    }
+      const defaultIcon = leaflet.icon({
+        iconUrl: ICON.iconUrl,
+        iconSize: ICON.iconSize,
+      });
 
-  }, [hoverCardIndex, locations]);
+      leaflet
+        .marker({
+          lat: location?.latitude || CITY[0],
+          lng: location?.longitude || CITY[1],
+        }, {icon: isActiveIcon ? activeIcon : defaultIcon})
+        .addTo(iconsGroup);
+    });
+
+    instance.setView(cityLocationCoordinates, ZOOM);
+
+    return () => {
+      iconsGroup.clearLayers();
+    };
+
+  }, [hoverCardIndex, offers]);
 
   return (
     <div ref={mapRef} style={{ height: '100%', width: '100%' }}></div>
@@ -98,11 +84,6 @@ function Map({ cityLocation, offers, hoverCardIndex }) {
 
 Map.propTypes = {
   offers: PropTypes.arrayOf(offerProp).isRequired,
-  cityLocation: PropTypes.shape({
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-    zoom: PropTypes.number.isRequired,
-  }),
   hoverCardIndex: PropTypes.number,
 };
 

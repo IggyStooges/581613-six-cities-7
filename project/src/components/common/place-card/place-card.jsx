@@ -5,7 +5,7 @@ import { hoverCityCard } from '../../../store/action';
 import { connect, useDispatch } from 'react-redux';
 import { markFavorite } from '../../../store/api-actions';
 
-function PlaceCard({ price, previewImage, title, apartmentType, rating, onCardHover, id, index, isFavorite }) {
+function PlaceCard({ price, previewImage, title, apartmentType, rating, id, isFavorite, hasHoverEffect, onCardHover }) {
   const dispatch = useDispatch();
   const getOfferPath = (roomId) => `/offer/${roomId}`;
 
@@ -16,11 +16,27 @@ function PlaceCard({ price, previewImage, title, apartmentType, rating, onCardHo
     }));
   };
 
+  const handleMouseOver = () => {
+    if (!hasHoverEffect) {
+      return;
+    }
+
+    onCardHover(id);
+  };
+
+  const handleMouseLeave = () => {
+    if (!hasHoverEffect) {
+      return;
+    }
+
+    onCardHover(null);
+  };
+
   return (
     <article
       className="cities__place-card place-card"
-      onMouseOver={() => onCardHover(index)}
-      onMouseLeave={() => onCardHover(null)}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={getOfferPath(id)}>
@@ -70,8 +86,8 @@ PlaceCard.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-  index: PropTypes.number,
   isFavorite: PropTypes.bool,
+  hasHoverEffect: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

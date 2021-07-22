@@ -27,8 +27,9 @@ describe("Application Routing", () => {
       USER: { authorizationStatus: AuthorizationStatus.NO_AUTH, user: null },
       ROOM: {
         nearbyOffers: [],
-        currentRoom: {},
+        currentRoom: null,
         comments: [],
+        isRoomDataLoaded: false,
       },
     });
 
@@ -82,8 +83,9 @@ describe("Application Routing", () => {
       },
       ROOM: {
         nearbyOffers: [],
-        currentRoom: {},
+        currentRoom: null,
         comments: [],
+        isRoomDataLoaded: false,
       },
       FAVORITES: {
         favoritesList: []

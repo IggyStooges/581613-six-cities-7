@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import RatingStars from './rating-stars';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { postComment } from '../../../store/api-actions';
+import {getCommentsError} from '../../../store/room/selectors';
 
-function CommentForm({ roomId }) {
+function CommentForm({ roomId, commentError }) {
   const dispatch = useDispatch();
   const [formState, setFormState] = useState({
     rating: 0,
     comment: '',
+    isFormDisabled: false,
   });
+
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
 
   const { rating, comment } = formState;
 
@@ -30,6 +34,8 @@ function CommentForm({ roomId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    setIsFormDisabled(true);
+
     dispatch(postComment({
       id: roomId,
       comment: comment,
@@ -40,12 +46,17 @@ function CommentForm({ roomId }) {
       rating: 0,
       comment: '',
     });
+
+    setIsFormDisabled(false);
   };
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
+      {!!commentError && (
+        <h2>Что-то пошло не так, попробуйте повторить отправку позже.</h2>
+      )}
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <RatingStars onChange={handleRatingChange} rating={rating} />
+      <RatingStars onChange={handleRatingChange} rating={rating} isDisabled={isFormDisabled} />
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
@@ -53,12 +64,13 @@ function CommentForm({ roomId }) {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleCommentChange}
         value={comment}
+        disabled={isFormDisabled}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help" data-testid="reviews-help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={comment.length < 50 || !rating}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={comment.length < 50 || !rating || isFormDisabled}>Submit</button>
       </div>
     </form>
   );
@@ -66,6 +78,13 @@ function CommentForm({ roomId }) {
 
 CommentForm.propTypes = {
   roomId: PropTypes.number,
+  commentError: PropTypes.string,
 };
 
-export default CommentForm;
+const mapStateToProps = (state) => ({
+  commentError: getCommentsError(state),
+});
+
+
+export { CommentForm };
+export default connect(mapStateToProps, null)(CommentForm);
