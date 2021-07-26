@@ -23,7 +23,7 @@ function Favorites({ favoritesOffers = {} }) {
         isFavouritelList ? (
           <main className="page__main page__main--favorites">
             <div className="page__favorites-container container">
-              <section className="favorites">
+              <section className="favorites" data-testid="favorites-list">
                 <h1 className="favorites__title">Saved listing</h1>
                 <ul className="favorites__list">
                   {Object.keys(favoritesOffers).map(( city ) => (

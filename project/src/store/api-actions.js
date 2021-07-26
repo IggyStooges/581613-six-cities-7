@@ -37,7 +37,7 @@ export const checkAuth = () => (dispatch, _getState, api) =>
     .get(APIRoute.LOGIN)
     .then(({ data }) => {
       localStorage.setItem('token', data.token);
-      dispatch(getUserInfo({ login: data.email, avatarUrl: data.avatarUrl }));
+      dispatch(getUserInfo({ login: data.email, avatarUrl: data.avatar_url }));
     })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {});
@@ -49,7 +49,7 @@ export const login =
       .then(({ data }) => {
         localStorage.setItem('token', data.token);
         dispatch(
-          getUserInfo({ login: data.email, avatarUrl: data.avatarUrl }),
+          getUserInfo({ login: data.email, avatarUrl: data.avatar_url }),
         );
       })
       .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))

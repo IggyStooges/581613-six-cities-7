@@ -27,7 +27,7 @@ describe('Async operations', () => {
 
     apiMock
       .onGet(APIRoute.LOGIN)
-      .reply(200, { avatarUrl: 'url', email: 'login' });
+      .reply(200, { 'avatar_url': 'url', email: 'login' });
 
     return checkAuthLoader(dispatch, () => {}, api).then(() => {
       expect(dispatch).toHaveBeenCalledTimes(2);
@@ -52,7 +52,7 @@ describe('Async operations', () => {
 
     apiMock
       .onPost(APIRoute.LOGIN)
-      .reply(200, { avatarUrl: 'url', email: 'login' });
+      .reply(200, { 'avatar_url': 'url', email: 'login' });
 
     return loginLoader(dispatch, () => {}, api).then(() => {
       expect(dispatch).toHaveBeenCalledTimes(3);
